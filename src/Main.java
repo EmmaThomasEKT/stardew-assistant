@@ -2,10 +2,7 @@
 // Basic seasonal budgeting for major purchases (seeds, farm animals and buildings)
 // Calculate your profit based on animals (high/low heart level), seeds,
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.Scanner;
 
 public class Main {
@@ -82,9 +79,7 @@ public class Main {
                         calculateTotal();
                         break;
                     case 6:
-                        budgeting = false;
-                        // causes error. try to find way back to main without calling main() ?
-                        break;
+                        return;
                     default:
                         System.out.println("Invalid choice.");
                 }
@@ -108,17 +103,16 @@ public class Main {
 
                 switch (category) {
                     case 1:
-                        FarmBuildingManager.farmBuildings();
+                        FarmBuildingManager.farmBuildings(scanner);
                         break;
                     case 2:
-                        houseUpgrades(scanner);
+                        FarmBuildingManager.houseUpgrades(scanner);
                         break;
                     case 3:
                         houseRenovations(scanner);
                         break;
                     case 4:
-                        carpenter = false;
-                        break;
+                        return;
                     default:
                         System.out.println("Invalid choice.");
                 }
@@ -172,14 +166,25 @@ public class Main {
 
             switch (option) {
                 case 1:
-                    //clear the list
+                    try {
+                        // print writer overwrites the file
+                        PrintWriter writer = new PrintWriter("ShoppingList.txt");
+                        // writing empty string to the file
+                        writer.print("");
+                        // close the writer to ensure all changes are written and resources are released
+                        writer.close();
+                        System.out.println("Your shopping list has been successfully cleared");
+                    } catch (FileNotFoundException e) {
+                        System.err.println("Error: File not found");
+                    }
                     break;
                 case 2:
                     calculateTotal();
                     break;
                 case 3:
-                    seasonalBudget(scanner);
-                    break;
+                    return;
+                default:
+                    System.out.println("Invalid Choice.");
             }
         }
 

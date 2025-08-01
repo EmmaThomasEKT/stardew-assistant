@@ -5,10 +5,8 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class FarmBuildingManager {
-    public static void farmBuildings() {
-        boolean buildingShop = true;
-
-        Scanner scanner = new Scanner(System.in);
+    public static boolean farmBuildings(Scanner scanner) {
+        boolean farmBuildingShop = true;
 
         Map<String, FarmBuildings> buildingOptions = new LinkedHashMap<>();
 
@@ -32,7 +30,7 @@ public class FarmBuildingManager {
         buildingOptions.put("Stable", new FarmBuildings(10000, Map.of("Hardwood", 100, "Iron Bar", 5)));
         buildingOptions.put("Well", new FarmBuildings(1000, Map.of("Stone", 75)));
 
-        buildingOptions.put("Cabin", new FarmBuildings(100, Map.of()));
+        buildingOptions.put("Cabin", new FarmBuildings(100, Map.of())); // no materials
         buildingOptions.put("Shipping Bin", new FarmBuildings(250, Map.of("Wood", 150)));
         buildingOptions.put("Pet Bowl", new FarmBuildings(5000, Map.of("Hardwood", 25)));
 
@@ -41,13 +39,13 @@ public class FarmBuildingManager {
             System.out.println(entry.getKey() + ":\n" + entry.getValue());
         }
 
-        while (buildingShop) {
+        while (true) {
 
-            System.out.println("\nEnter building name to add to your list, or R to return:");
+            System.out.println("\nEnter building name to add to your list, or R to return to the Carpenter's Shop:");
             String buildingInput = scanner.nextLine();
 
             if (buildingInput.equalsIgnoreCase("R")) {
-                buildingShop = false;
+                return false;
             } else if (buildingOptions.containsKey(buildingInput)) {
                 FarmBuildings selected = buildingOptions.get(buildingInput);
                 // add selected to user's list
@@ -69,7 +67,48 @@ public class FarmBuildingManager {
             }
 
         }
+    }
 
-        scanner.close();
+    public static boolean houseUpgrades(Scanner scanner) {
+
+        Map<String, FarmBuildings> houseOptions = new LinkedHashMap<>();
+
+        houseOptions.put("Kitchen", new FarmBuildings(10000, Map.of("Wood", 450)));
+        houseOptions.put("Crib", new FarmBuildings(65000, Map.of("Hardwood", 100)));
+        houseOptions.put("Basement", new FarmBuildings(100000, Map.of())); // no materials
+
+        System.out.println("Here are the available house upgrades:\n");
+        for (Map.Entry<String, FarmBuildings> entry : houseOptions.entrySet()) {
+            System.out.println(entry.getKey() + ":\n" + entry.getValue());
+        }
+
+        while (true) {
+
+            System.out.println("\nEnter building name to add to your list, or R to return to the Carpenter's Shop:");
+            String buildingInput = scanner.nextLine();
+
+            if (buildingInput.equalsIgnoreCase("R")) {
+                return false;
+            } else if (houseOptions.containsKey(buildingInput)) {
+                FarmBuildings selected = houseOptions.get(buildingInput);
+                // add selected to user's list
+                System.out.println(buildingInput + " added to your list.");
+
+                try (FileWriter fw = new FileWriter("ShoppingList.txt", true)) {
+                    fw.write(buildingInput + ":\n");
+                    for (Map.Entry<String, Integer> entry : selected.materials.entrySet()) {
+                        fw.write(" " + entry.getKey() + ": " + entry.getValue() + "\n");
+                    }
+                    fw.write("\n");
+                    fw.close();
+
+                } catch(IOException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                System.out.println("Invalid selection.");
+            }
+
+        }
     }
 }
