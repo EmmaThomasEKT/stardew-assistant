@@ -21,16 +21,14 @@ public class SeasonalBudgetManager {
 
         buildingOptions.put("Fish Pond", new SeasonalBudgetFormat(5000, Map.of("Stone", 200, "Seaweed", 5, "Green Algae", 5)));
         buildingOptions.put("Mill", new SeasonalBudgetFormat(2500, Map.of("Wood", 150, "Stone", 50, "Cloth", 4)));
-
         buildingOptions.put("Shed", new SeasonalBudgetFormat(15000, Map.of("Wood", 300)));
-        buildingOptions.put("Big Shed", new SeasonalBudgetFormat(20000, Map.of("Wood", 550, "Stone", 300)));
 
+        buildingOptions.put("Big Shed", new SeasonalBudgetFormat(20000, Map.of("Wood", 550, "Stone", 300)));
         buildingOptions.put("Silo", new SeasonalBudgetFormat(100, Map.of("Stone", 100, "Clay", 10, "Copper Bar", 5)));
         buildingOptions.put("Slime Hutch", new SeasonalBudgetFormat(10000, Map.of("Stone", 500, "Refined Quartz", 10, "Iridium Bar", 1)));
-
         buildingOptions.put("Stable", new SeasonalBudgetFormat(10000, Map.of("Hardwood", 100, "Iron Bar", 5)));
-        buildingOptions.put("Well", new SeasonalBudgetFormat(1000, Map.of("Stone", 75)));
 
+        buildingOptions.put("Well", new SeasonalBudgetFormat(1000, Map.of("Stone", 75)));
         buildingOptions.put("Cabin", new GoldOnlyBudgetFormat(100));
         buildingOptions.put("Shipping Bin", new SeasonalBudgetFormat(250, Map.of("Wood", 150)));
         buildingOptions.put("Pet Bowl", new SeasonalBudgetFormat(5000, Map.of("Hardwood", 25)));
@@ -54,7 +52,7 @@ public class SeasonalBudgetManager {
 
                 try (FileWriter fw = new FileWriter("ShoppingList.txt", true)) {
                     fw.write(buildingInput + ":\n");
-                    fw.write(" Gold: " + selected.getGold() + "g/n");
+                    fw.write(" Gold: " + selected.getGold() + "g\n");
 
                     if (!selected.getMaterials().isEmpty()) {
                         fw.write(" Materials:\n");
@@ -71,7 +69,6 @@ public class SeasonalBudgetManager {
             } else {
                 System.out.println("Invalid selection.");
             }
-
         }
     }
 
@@ -102,7 +99,7 @@ public class SeasonalBudgetManager {
 
                 try (FileWriter fw = new FileWriter("ShoppingList.txt", true)) {
                     fw.write(buildingInput + ":\n");
-                    fw.write(" Gold: " + selected.getGold() + "g/n");
+                    fw.write(" Gold: " + selected.getGold() + "g\n");
 
                     if (!selected.getMaterials().isEmpty()) {
                         fw.write(" Materials:\n");
@@ -119,7 +116,6 @@ public class SeasonalBudgetManager {
             } else {
                 System.out.println("Invalid selection.");
             }
-
         }
     }
 
@@ -157,7 +153,7 @@ public class SeasonalBudgetManager {
 
                 try (FileWriter fw = new FileWriter("ShoppingList.txt", true)) {
                     fw.write(buildingInput + ":\n");
-                    fw.write(" Gold: " + selected.getGold() + "g/n");
+                    fw.write(" Gold: " + selected.getGold() + "g\n");
 
                     if (!selected.getMaterials().isEmpty()) {
                         fw.write(" Materials:\n");
@@ -197,7 +193,7 @@ public class SeasonalBudgetManager {
 
         while (true) {
 
-            System.out.println("\nEnter the livestock name to add to your list, or R to return to Marnie's Ranch:");
+            System.out.println("\nEnter the livestock name to add to your list, or R to return:");
             String buildingInput = scanner.nextLine();
 
             if (buildingInput.equalsIgnoreCase("R")) {
@@ -209,7 +205,7 @@ public class SeasonalBudgetManager {
 
                 try (FileWriter fw = new FileWriter("ShoppingList.txt", true)) {
                     fw.write(buildingInput + ":\n");
-                    fw.write(" Gold: " + selected.getGold() + "g/n");
+                    fw.write(" Gold: " + selected.getGold() + "g\n");
 
                     if (!selected.getMaterials().isEmpty()) {
                         fw.write(" Materials:\n");
@@ -226,9 +222,7 @@ public class SeasonalBudgetManager {
             } else {
                 System.out.println("Invalid selection.");
             }
-
         }
-
     }
 
     public static boolean petAdoption(Scanner scanner) {
@@ -254,12 +248,12 @@ public class SeasonalBudgetManager {
                 return false;
             } else if (petAdoptionOptions.containsKey(buildingInput)) {
                 BudgetItem.BudgetItemImpl selected = petAdoptionOptions.get(buildingInput);
-                // add selected to user's list
+
                 System.out.println(buildingInput + " added to your list.");
 
                 try (FileWriter fw = new FileWriter("ShoppingList.txt", true)) {
                     fw.write(buildingInput + ":\n");
-                    fw.write(" Gold: " + selected.getGold() + "g/n");
+                    fw.write(" Gold: " + selected.getGold() + "g\n");
 
                     if (!selected.getMaterials().isEmpty()) {
                         fw.write(" Materials:\n");
@@ -276,9 +270,6 @@ public class SeasonalBudgetManager {
             } else {
                 System.out.println("Invalid selection.");
             }
-
         }
-
     }
-
 }
