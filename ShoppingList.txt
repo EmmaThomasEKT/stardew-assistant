@@ -33,3 +33,8 @@ Barn:
  Wood: 350
  Stone: 150
 
+Fish Pond:
+ Stone: 200
+ Seaweed: 5
+ Green Algae: 5
+
