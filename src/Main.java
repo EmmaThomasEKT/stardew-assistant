@@ -103,13 +103,13 @@ public class Main {
 
                 switch (category) {
                     case 1:
-                        FarmBuildingManager.farmBuildings(scanner);
+                        SeasonalBudgetManager.farmBuildings(scanner);
                         break;
                     case 2:
-                        FarmBuildingManager.houseUpgrades(scanner);
+                        SeasonalBudgetManager.houseUpgrades(scanner);
                         break;
                     case 3:
-                        houseRenovations(scanner);
+                        SeasonalBudgetManager.houseRenovations(scanner);
                         break;
                     case 4:
                         return;
@@ -120,16 +120,27 @@ public class Main {
 
         }
 
-        public static void houseUpgrades(Scanner scanner) {
-            System.out.println("Under Construction!");
-        }
-
-        public static void houseRenovations(Scanner scanner) {
-            System.out.println("Under Construction!");
-        }
-
         public static void marnieRanch(Scanner scanner) {
-            System.out.println("Under Construction!");
+            System.out.println("Welcome to Marnie's Ranch! Please select a category from below:");
+            System.out.println("""
+                    1. Livestock
+                    2. Pet Adoption
+                    3. Return
+                    """);
+            int category = scanner.nextInt();
+
+            switch (category) {
+                case 1:
+                    SeasonalBudgetManager.livestock(scanner);
+                    break;
+                case 2:
+                    SeasonalBudgetManager.petAdoption(scanner);
+                    break;
+                case 3:
+                    return;
+                default:
+                    System.out.println("Invalid Choice.");
+            }
         }
 
         public static void pierreShop(Scanner scanner) {
