@@ -1,0 +1,35 @@
+Pet Bowl - Gold: 5000g
+Materials:
+  - Hardwood: 25
+
+Shipping Bin - Gold: 250g
+Materials:
+  - Wood: 150
+
+Barn - Gold: 6000g
+Materials:
+  - Wood: 350
+  - Stone: 150
+
+Pet Bowl - Gold: 5000g
+Materials:
+  - Hardwood: 25
+
+Shipping Bin - Gold: 250g
+Materials:
+  - Wood: 150
+
+Cabin - Gold: 100g
+Materials:
+
+Pet Bowl - Gold: 5000g
+Materials:
+  - Hardwood: 25
+
+Pet Bowl:
+ Hardwood: 25
+
+Barn:
+ Wood: 350
+ Stone: 150
+

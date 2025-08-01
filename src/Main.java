@@ -1,14 +1,12 @@
 // Stardew Valley Assistant.
-// 3 Functions
+// Basic seasonal budgeting for major purchases (seeds, farm animals and buildings)
+// Calculate your profit based on animals (high/low heart level), seeds,
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
 
@@ -104,7 +102,7 @@ public class Main {
 
                 switch (category) {
                     case 1:
-                        farmBuildings(scanner);
+                        FarmBuildingManager.farmBuildings();
                         break;
                     case 2:
                         houseUpgrades(scanner);
@@ -118,33 +116,6 @@ public class Main {
                     default:
                         System.out.println("Invalid choice.");
                 }
-            }
-
-        }
-
-        public static void farmBuildings(Scanner scanner) {
-
-            Map<String, Integer> barnMaterials = new HashMap<>();
-            barnMaterials.put("Wood", 350);
-            barnMaterials.put("Stone", 150);
-            FarmBuildings barn = new FarmBuildings(6000, barnMaterials);
-
-
-            System.out.println("Here are the available farm buildings: ");
-            System.out.println("Barn:\n" + barn);
-
-            System.out.println("Please select building/s to add to your shopping list: ");
-            String building = scanner.nextLine();
-
-            switch (building) {
-
-            }
-
-            try {
-                FileWriter fw = new FileWriter("ShoppingList.txt", true); // true for append mode
-                // ...
-            } catch (IOException e) {
-                e.printStackTrace();
             }
 
         }
