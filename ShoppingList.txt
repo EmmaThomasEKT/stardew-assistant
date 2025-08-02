@@ -16,3 +16,19 @@ Tulip Bulb 8:
 Rice Shoot 14:
  Gold: 560g
 
+Artichoke Seeds 2:
+ Gold: 200g
+
+{Cherry Sapling=Gold: 3400g
+, Apricot Sapling=Gold: 2000g
+, Orange Sapling=Gold: 4000g
+, Peach Sapling=Gold: 6000g
+, Pomegranate Sapling=Gold: 6000g
+, Apple Sapling=Gold: 4000g
+, Catalogue=Gold: 30000g
+, Dehydrator (Recipe)=Gold: 10000g
+, Large Pack=Gold: 2000g
+, Deluxe Pack=Gold: 10000g
+}:
+ Gold: 10000g
+

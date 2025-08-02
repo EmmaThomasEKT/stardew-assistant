@@ -5,8 +5,8 @@
 // CURRENT ISSUES:
 //      printing "invalid input" when printing stock options
 //      no lowercase/catch options for inputs
-//      need quantity option "20 Parsnip Seeds"
 //      inconsistencies when printing stock options
+//      if quantity = null then item should be 1 by default
 
 import java.io.*;
 import java.util.Scanner;

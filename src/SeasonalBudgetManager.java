@@ -296,20 +296,44 @@ public class SeasonalBudgetManager {
             System.out.println("\nPlease enter the item name to add to your list, or R to return.");
             String itemInput = scanner.nextLine();
 
-            if (itemInput.equalsIgnoreCase("R")) {
+            if(itemInput.equalsIgnoreCase("R")) {
                 return false;
-            } else if (yearRoundOptions.containsKey(itemInput)) {
-                BudgetItem.BudgetItemImpl selected = yearRoundOptions.get(itemInput);
+            }
 
-                System.out.println(itemInput + " added to your list.");
+            String[] parts = itemInput.trim().split(" ");
+            if (parts.length < 2) {
+                System.out.println("Please enter both item name and quantity (e.g. Parsnip Seeds 20)");
+                continue;
+            }
+
+            String quantityStr = parts[parts.length -1];
+            int quantity;
+            try {
+                quantity = Integer.parseInt(quantityStr);
+                if (quantity <= 0) {
+                    System.out.println("Quantity must be a positive number.");
+                    continue;
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid quantity. Please enter a number at the end.");
+                continue;
+            }
+
+            String itemName = String.join(" ", Arrays.copyOf(parts, parts.length - 1));
+
+            if (yearRoundOptions.containsKey(itemName)) {
+                BudgetItem.BudgetItemImpl selected = yearRoundOptions.get(itemName);
+
+                System.out.println(itemName + " x" + quantity + " added to your list.");
 
                 try (FileWriter fw  = new FileWriter("ShoppingList.txt", true)) {
-                    fw.write(itemInput + ":\n");
-                    fw.write(" Gold: " + selected.getGold() + "g\n");
+                    fw.write(yearRoundOptions + ":\n");
+                    fw.write(" Gold: " + (selected.getGold() * quantity) + "g\n");
+
                     if (!selected.getMaterials().isEmpty()) {
                         fw.write(" Materials:\n");
                         for (Map.Entry<String, Integer> entry : selected.getMaterials().entrySet()) {
-                            fw.write("   - " + entry.getKey() + ": " + entry.getValue() + "\n");
+                            fw.write("   - " + entry.getKey() + ": " + (entry.getValue() * quantity) + "\n");
                         }
                     }
                     fw.write("\n");
@@ -319,7 +343,7 @@ public class SeasonalBudgetManager {
                 }
 
             } else {
-                System.out.println("Invalid Choice.");
+                System.out.println("Invalid Input");
             }
         }
     }
@@ -438,18 +462,42 @@ public class SeasonalBudgetManager {
 
             if(summerInput.equalsIgnoreCase("R")) {
                 return false;
-            } else if (summerOptions.containsKey(summerInput)) {
-                BudgetItem.BudgetItemImpl selected = summerOptions.get(summerInput);
+            }
 
-                System.out.println(summerInput + " added to your list.");
+            String[] parts = summerInput.trim().split(" ");
+            if (parts.length < 2) {
+                System.out.println("Please enter both item name and quantity (e.g. Melon Seeds 20)");
+                continue;
+            }
+
+            String quantityStr = parts[parts.length -1];
+            int quantity;
+            try {
+                quantity = Integer.parseInt(quantityStr);
+                if (quantity <= 0) {
+                    System.out.println("Quantity must be a positive number.");
+                    continue;
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid quantity. Please enter a number at the end.");
+                continue;
+            }
+
+            String itemName = String.join(" ", Arrays.copyOf(parts, parts.length - 1));
+
+            if (summerOptions.containsKey(itemName)) {
+                BudgetItem.BudgetItemImpl selected = summerOptions.get(itemName);
+
+                System.out.println(itemName + " x" + quantity + " added to your list.");
 
                 try (FileWriter fw  = new FileWriter("ShoppingList.txt", true)) {
                     fw.write(summerInput + ":\n");
-                    fw.write(" Gold: " + selected.getGold() + "g\n");
+                    fw.write(" Gold: " + (selected.getGold() * quantity) + "g\n");
+
                     if (!selected.getMaterials().isEmpty()) {
                         fw.write(" Materials:\n");
                         for (Map.Entry<String, Integer> entry : selected.getMaterials().entrySet()) {
-                            fw.write("   - " + entry.getKey() + ": " + entry.getValue() + "\n");
+                            fw.write("   - " + entry.getKey() + ": " + (entry.getValue() * quantity) + "\n");
                         }
                     }
                     fw.write("\n");
@@ -498,18 +546,42 @@ public class SeasonalBudgetManager {
 
             if(fallInput.equalsIgnoreCase("R")) {
                 return false;
-            } else if (fallOptions.containsKey(fallInput)) {
-                BudgetItem.BudgetItemImpl selected = fallOptions.get(fallInput);
+            }
 
-                System.out.println(fallInput + " added to your list.");
+            String[] parts = fallInput.trim().split(" ");
+            if (parts.length < 2) {
+                System.out.println("Please enter both item name and quantity (e.g. Eggplant Seeds 20)");
+                continue;
+            }
+
+            String quantityStr = parts[parts.length -1];
+            int quantity;
+            try {
+                quantity = Integer.parseInt(quantityStr);
+                if (quantity <= 0) {
+                    System.out.println("Quantity must be a positive number.");
+                    continue;
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid quantity. Please enter a number at the end.");
+                continue;
+            }
+
+            String itemName = String.join(" ", Arrays.copyOf(parts, parts.length - 1));
+
+            if (fallOptions.containsKey(itemName)) {
+                BudgetItem.BudgetItemImpl selected = fallOptions.get(itemName);
+
+                System.out.println(itemName + " x" + quantity + " added to your list.");
 
                 try (FileWriter fw  = new FileWriter("ShoppingList.txt", true)) {
                     fw.write(fallInput + ":\n");
-                    fw.write(" Gold: " + selected.getGold() + "g\n");
+                    fw.write(" Gold: " + (selected.getGold() * quantity) + "g\n");
+
                     if (!selected.getMaterials().isEmpty()) {
                         fw.write(" Materials:\n");
                         for (Map.Entry<String, Integer> entry : selected.getMaterials().entrySet()) {
-                            fw.write("   - " + entry.getKey() + ": " + entry.getValue() + "\n");
+                            fw.write("   - " + entry.getKey() + ": " + (entry.getValue() * quantity) + "\n");
                         }
                     }
                     fw.write("\n");
