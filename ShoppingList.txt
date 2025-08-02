@@ -7,3 +7,12 @@ Rice Shoot:
 Artichoke Seeds:
  Gold: 100g
 
+Rice Shoot 14:
+ Gold: 40g
+
+Tulip Bulb 8:
+ Gold: 20g
+
+Rice Shoot 14:
+ Gold: 560g
+

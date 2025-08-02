@@ -1,10 +1,7 @@
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class SeasonalBudgetManager {
     public static boolean farmBuildings(Scanner scanner) { // boolean instead of void (automatically true)
@@ -357,18 +354,42 @@ public class SeasonalBudgetManager {
 
             if(springInput.equalsIgnoreCase("R")) {
                 return false;
-            } else if (springOptions.containsKey(springInput)) {
-                BudgetItem.BudgetItemImpl selected = springOptions.get(springInput);
+            }
 
-                System.out.println(springInput + " added to your list.");
+            String[] parts = springInput.trim().split(" ");
+            if (parts.length < 2) {
+                System.out.println("Please enter both item name and quantity (e.g. Parsnip Seeds 20)");
+                continue;
+            }
+
+            String quantityStr = parts[parts.length -1];
+            int quantity;
+            try {
+                quantity = Integer.parseInt(quantityStr);
+                if (quantity <= 0) {
+                    System.out.println("Quantity must be a positive number.");
+                    continue;
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid quantity. Please enter a number at the end.");
+                continue;
+            }
+
+            String itemName = String.join(" ", Arrays.copyOf(parts, parts.length - 1));
+
+            if (springOptions.containsKey(itemName)) {
+                BudgetItem.BudgetItemImpl selected = springOptions.get(itemName);
+
+                System.out.println(itemName + " x" + quantity + " added to your list.");
 
                 try (FileWriter fw  = new FileWriter("ShoppingList.txt", true)) {
                     fw.write(springInput + ":\n");
-                    fw.write(" Gold: " + selected.getGold() + "g\n");
+                    fw.write(" Gold: " + (selected.getGold() * quantity) + "g\n");
+
                     if (!selected.getMaterials().isEmpty()) {
                         fw.write(" Materials:\n");
                         for (Map.Entry<String, Integer> entry : selected.getMaterials().entrySet()) {
-                            fw.write("   - " + entry.getKey() + ": " + entry.getValue() + "\n");
+                            fw.write("   - " + entry.getKey() + ": " + (entry.getValue() * quantity) + "\n");
                         }
                     }
                     fw.write("\n");
