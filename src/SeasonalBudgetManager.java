@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
@@ -6,8 +7,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class SeasonalBudgetManager {
-    public static boolean farmBuildings(Scanner scanner) {
-        boolean farmBuildingShop = true;
+    public static boolean farmBuildings(Scanner scanner) { // boolean instead of void (automatically true)
 
         Map<String, BudgetItem.BudgetItemImpl> buildingOptions = new LinkedHashMap<>();
 
@@ -88,17 +88,17 @@ public class SeasonalBudgetManager {
         while (true) {
 
             System.out.println("\nEnter the upgrade name to add to your list, or R to return to the Carpenter's Shop:");
-            String buildingInput = scanner.nextLine();
+            String upgradeInput = scanner.nextLine();
 
-            if (buildingInput.equalsIgnoreCase("R")) {
+            if (upgradeInput.equalsIgnoreCase("R")) {
                 return false;
-            } else if (houseOptions.containsKey(buildingInput)) {
-                BudgetItem.BudgetItemImpl selected = houseOptions.get(buildingInput);
+            } else if (houseOptions.containsKey(upgradeInput)) {
+                BudgetItem.BudgetItemImpl selected = houseOptions.get(upgradeInput);
                 // add selected to user's list
-                System.out.println(buildingInput + " added to your list.");
+                System.out.println(upgradeInput + " added to your list.");
 
                 try (FileWriter fw = new FileWriter("ShoppingList.txt", true)) {
-                    fw.write(buildingInput + ":\n");
+                    fw.write(upgradeInput + ":\n");
                     fw.write(" Gold: " + selected.getGold() + "g\n");
 
                     if (!selected.getMaterials().isEmpty()) {
@@ -142,17 +142,17 @@ public class SeasonalBudgetManager {
         while (true) {
 
             System.out.println("\nEnter the renovation name to add to your list, or R to return to the Carpenter's Shop:");
-            String buildingInput = scanner.nextLine();
+            String renoInput = scanner.nextLine();
 
-            if (buildingInput.equalsIgnoreCase("R")) {
+            if (renoInput.equalsIgnoreCase("R")) {
                 return false;
-            } else if (houseRenoOptions.containsKey(buildingInput)) {
-                BudgetItem.BudgetItemImpl selected = houseRenoOptions.get(buildingInput);
+            } else if (houseRenoOptions.containsKey(renoInput)) {
+                BudgetItem.BudgetItemImpl selected = houseRenoOptions.get(renoInput);
                 // add selected to user's list
-                System.out.println(buildingInput + " added to your list.");
+                System.out.println(renoInput + " added to your list.");
 
                 try (FileWriter fw = new FileWriter("ShoppingList.txt", true)) {
-                    fw.write(buildingInput + ":\n");
+                    fw.write(renoInput + ":\n");
                     fw.write(" Gold: " + selected.getGold() + "g\n");
 
                     if (!selected.getMaterials().isEmpty()) {
@@ -194,17 +194,17 @@ public class SeasonalBudgetManager {
         while (true) {
 
             System.out.println("\nEnter the livestock name to add to your list, or R to return:");
-            String buildingInput = scanner.nextLine();
+            String livestockInput = scanner.nextLine();
 
-            if (buildingInput.equalsIgnoreCase("R")) {
+            if (livestockInput.equalsIgnoreCase("R")) {
                 return false;
-            } else if (livestockOptions.containsKey(buildingInput)) {
-                BudgetItem.BudgetItemImpl selected = livestockOptions.get(buildingInput);
+            } else if (livestockOptions.containsKey(livestockInput)) {
+                BudgetItem.BudgetItemImpl selected = livestockOptions.get(livestockInput);
                 // add selected to user's list
-                System.out.println(buildingInput + " added to your list.");
+                System.out.println(livestockInput + " added to your list.");
 
                 try (FileWriter fw = new FileWriter("ShoppingList.txt", true)) {
-                    fw.write(buildingInput + ":\n");
+                    fw.write(livestockInput + ":\n");
                     fw.write(" Gold: " + selected.getGold() + "g\n");
 
                     if (!selected.getMaterials().isEmpty()) {
@@ -242,17 +242,17 @@ public class SeasonalBudgetManager {
         while (true) {
 
             System.out.println("\nEnter the pet name to add to your list, or R to return to Marnie's Ranch:");
-            String buildingInput = scanner.nextLine();
+            String petInput = scanner.nextLine();
 
-            if (buildingInput.equalsIgnoreCase("R")) {
+            if (petInput.equalsIgnoreCase("R")) {
                 return false;
-            } else if (petAdoptionOptions.containsKey(buildingInput)) {
-                BudgetItem.BudgetItemImpl selected = petAdoptionOptions.get(buildingInput);
+            } else if (petAdoptionOptions.containsKey(petInput)) {
+                BudgetItem.BudgetItemImpl selected = petAdoptionOptions.get(petInput);
 
-                System.out.println(buildingInput + " added to your list.");
+                System.out.println(petInput + " added to your list.");
 
                 try (FileWriter fw = new FileWriter("ShoppingList.txt", true)) {
-                    fw.write(buildingInput + ":\n");
+                    fw.write(petInput + ":\n");
                     fw.write(" Gold: " + selected.getGold() + "g\n");
 
                     if (!selected.getMaterials().isEmpty()) {
@@ -263,12 +263,242 @@ public class SeasonalBudgetManager {
                     }
                     fw.write("\n");
                     fw.close();
-
                 } catch(IOException e) {
                     e.printStackTrace();
                 }
             } else {
                 System.out.println("Invalid selection.");
+            }
+        }
+    }
+
+    public static boolean yearRoundStock(Scanner scanner) {
+
+        Map<String, BudgetItem.BudgetItemImpl> yearRoundOptions = new LinkedHashMap<>();
+
+        yearRoundOptions.put("Cherry Sapling", new GoldOnlyBudgetFormat(3400));
+        yearRoundOptions.put("Apricot Sapling", new GoldOnlyBudgetFormat(2000));
+        yearRoundOptions.put("Orange Sapling", new GoldOnlyBudgetFormat(4000));
+        yearRoundOptions.put("Peach Sapling", new GoldOnlyBudgetFormat(6000));
+        yearRoundOptions.put("Pomegranate Sapling", new GoldOnlyBudgetFormat(6000));
+        yearRoundOptions.put("Apple Sapling", new GoldOnlyBudgetFormat(4000));
+
+        yearRoundOptions.put("Catalogue", new GoldOnlyBudgetFormat(30000));
+        yearRoundOptions.put("Dehydrator (Recipe)", new GoldOnlyBudgetFormat(10000));
+
+        yearRoundOptions.put("Large Pack", new GoldOnlyBudgetFormat(2000));
+        yearRoundOptions.put("Deluxe Pack", new GoldOnlyBudgetFormat(10000));
+
+        System.out.println("Here are the available items:\n");
+        for (Map.Entry<String, BudgetItem.BudgetItemImpl> entry : yearRoundOptions.entrySet()) {
+            System.out.println(entry.getKey() +"\n" + entry.getValue());
+        }
+
+        while (true) {
+
+            System.out.println("\nPlease enter the item name to add to your list, or R to return.");
+            String itemInput = scanner.nextLine();
+
+            if (itemInput.equalsIgnoreCase("R")) {
+                return false;
+            } else if (yearRoundOptions.containsKey(itemInput)) {
+                BudgetItem.BudgetItemImpl selected = yearRoundOptions.get(itemInput);
+
+                System.out.println(itemInput + " added to your list.");
+
+                try (FileWriter fw  = new FileWriter("ShoppingList.txt", true)) {
+                    fw.write(itemInput + ":\n");
+                    fw.write(" Gold: " + selected.getGold() + "g\n");
+                    if (!selected.getMaterials().isEmpty()) {
+                        fw.write(" Materials:\n");
+                        for (Map.Entry<String, Integer> entry : selected.getMaterials().entrySet()) {
+                            fw.write("   - " + entry.getKey() + ": " + entry.getValue() + "\n");
+                        }
+                    }
+                    fw.write("\n");
+                    fw.close();
+                } catch(IOException e) {
+                    e.printStackTrace();
+                }
+
+            } else {
+                System.out.println("Invalid Choice.");
+            }
+        }
+    }
+
+    public static boolean springStock(Scanner scanner) {
+
+        Map<String, BudgetItem.BudgetItemImpl> springOptions = new LinkedHashMap<>();
+
+        // add quantity mechanism too
+
+        springOptions.put("Parsnip Seeds", new GoldOnlyBudgetFormat(20));
+        springOptions.put("Bean Starter", new GoldOnlyBudgetFormat(60));
+        springOptions.put("Cauliflower Seeds", new GoldOnlyBudgetFormat(80));
+
+        springOptions.put("Potato Seeds", new GoldOnlyBudgetFormat(50));
+        springOptions.put("Tulip Bulb", new GoldOnlyBudgetFormat(20));
+        springOptions.put("Kale Seeds", new GoldOnlyBudgetFormat(70));
+
+        springOptions.put("Jazz Seeds", new GoldOnlyBudgetFormat(30));
+        springOptions.put("Garlic Seeds", new GoldOnlyBudgetFormat(40));
+        springOptions.put("Rice Shoot", new GoldOnlyBudgetFormat(40));
+
+        System.out.println("Here are the available seeds:\n");
+        for (Map.Entry<String, BudgetItem.BudgetItemImpl> entry : springOptions.entrySet()) {
+            System.out.println(entry.getKey() +"\n" + entry.getValue());
+        }
+
+        while (true) {
+
+            System.out.println("Select a seed followed by the quantity, or R to return.");
+            String springInput = scanner.nextLine();
+
+            if(springInput.equalsIgnoreCase("R")) {
+                return false;
+            } else if (springOptions.containsKey(springInput)) {
+                BudgetItem.BudgetItemImpl selected = springOptions.get(springInput);
+
+                System.out.println(springInput + " added to your list.");
+
+                try (FileWriter fw  = new FileWriter("ShoppingList.txt", true)) {
+                    fw.write(springInput + ":\n");
+                    fw.write(" Gold: " + selected.getGold() + "g\n");
+                    if (!selected.getMaterials().isEmpty()) {
+                        fw.write(" Materials:\n");
+                        for (Map.Entry<String, Integer> entry : selected.getMaterials().entrySet()) {
+                            fw.write("   - " + entry.getKey() + ": " + entry.getValue() + "\n");
+                        }
+                    }
+                    fw.write("\n");
+                    fw.close();
+                } catch(IOException e) {
+                    e.printStackTrace();
+                }
+
+            } else {
+                System.out.println("Invalid Input");
+            }
+        }
+    }
+
+    public static boolean summerStock(Scanner scanner) {
+
+        Map<String, BudgetItem.BudgetItemImpl> summerOptions = new LinkedHashMap<>();
+
+        // add quantity mechanism too
+
+        summerOptions.put("Melon Seeds", new GoldOnlyBudgetFormat(80));
+        summerOptions.put("Tomato Seeds", new GoldOnlyBudgetFormat(50));
+        summerOptions.put("Blueberry Seeds", new GoldOnlyBudgetFormat(80));
+
+        summerOptions.put("Pepper Seeds", new GoldOnlyBudgetFormat(40));
+        summerOptions.put("Wheat Seeds", new GoldOnlyBudgetFormat(10));
+        summerOptions.put("Radish Seeds", new GoldOnlyBudgetFormat(40));
+
+        summerOptions.put("Poppy Seeds", new GoldOnlyBudgetFormat(100));
+        summerOptions.put("Spangle Seeds", new GoldOnlyBudgetFormat(50));
+        summerOptions.put("Hops Starer", new GoldOnlyBudgetFormat(60));
+
+        summerOptions.put("Corn Seeds", new GoldOnlyBudgetFormat(150));
+        summerOptions.put("Sunflower Seeds", new GoldOnlyBudgetFormat(200));
+        summerOptions.put("Red Cabbage Seeds", new GoldOnlyBudgetFormat(100));
+
+        System.out.println("Here are the available seeds:\n");
+        for (Map.Entry<String, BudgetItem.BudgetItemImpl> entry : summerOptions.entrySet()) {
+            System.out.println(entry.getKey() +"\n" + entry.getValue());
+        }
+
+        while (true) {
+
+            System.out.println("Select a seed followed by the quantity, or R to return.");
+            String summerInput = scanner.nextLine();
+
+            if(summerInput.equalsIgnoreCase("R")) {
+                return false;
+            } else if (summerOptions.containsKey(summerInput)) {
+                BudgetItem.BudgetItemImpl selected = summerOptions.get(summerInput);
+
+                System.out.println(summerInput + " added to your list.");
+
+                try (FileWriter fw  = new FileWriter("ShoppingList.txt", true)) {
+                    fw.write(summerInput + ":\n");
+                    fw.write(" Gold: " + selected.getGold() + "g\n");
+                    if (!selected.getMaterials().isEmpty()) {
+                        fw.write(" Materials:\n");
+                        for (Map.Entry<String, Integer> entry : selected.getMaterials().entrySet()) {
+                            fw.write("   - " + entry.getKey() + ": " + entry.getValue() + "\n");
+                        }
+                    }
+                    fw.write("\n");
+                    fw.close();
+                } catch(IOException e) {
+                    e.printStackTrace();
+                }
+
+            } else {
+                System.out.println("Invalid Input");
+            }
+        }
+    }
+
+    public static boolean fallStock(Scanner scanner) {
+
+        Map<String, BudgetItem.BudgetItemImpl> fallOptions = new LinkedHashMap<>();
+
+        // add quantity mechanism too
+
+        fallOptions.put("Eggplant Seeds", new GoldOnlyBudgetFormat(20));
+        fallOptions.put("Corn", new GoldOnlyBudgetFormat(225));
+        fallOptions.put("Pumpkin Seeds", new GoldOnlyBudgetFormat(100));
+
+        fallOptions.put("Bokchoy Seeds", new GoldOnlyBudgetFormat(50));
+        fallOptions.put("Yam Seeds", new GoldOnlyBudgetFormat(60));
+        fallOptions.put("Cranberry Seeds", new GoldOnlyBudgetFormat(240));
+
+        fallOptions.put("Sunflower Seeds", new GoldOnlyBudgetFormat(100));
+        fallOptions.put("Fairy Seeds", new GoldOnlyBudgetFormat(50));
+        fallOptions.put("Amaranth Starer", new GoldOnlyBudgetFormat(60));
+
+        fallOptions.put("Grape Starter", new GoldOnlyBudgetFormat(150));
+        fallOptions.put("Wheat Seeds", new GoldOnlyBudgetFormat(10));
+        fallOptions.put("Artichoke Seeds", new GoldOnlyBudgetFormat(100));
+
+        System.out.println("Here are the available seeds:\n");
+        for (Map.Entry<String, BudgetItem.BudgetItemImpl> entry : fallOptions.entrySet()) {
+            System.out.println(entry.getKey() +"\n" + entry.getValue());
+        }
+
+        while (true) {
+
+            System.out.println("Select a seed followed by the quantity, or R to return.");
+            String fallInput = scanner.nextLine();
+
+            if(fallInput.equalsIgnoreCase("R")) {
+                return false;
+            } else if (fallOptions.containsKey(fallInput)) {
+                BudgetItem.BudgetItemImpl selected = fallOptions.get(fallInput);
+
+                System.out.println(fallInput + " added to your list.");
+
+                try (FileWriter fw  = new FileWriter("ShoppingList.txt", true)) {
+                    fw.write(fallInput + ":\n");
+                    fw.write(" Gold: " + selected.getGold() + "g\n");
+                    if (!selected.getMaterials().isEmpty()) {
+                        fw.write(" Materials:\n");
+                        for (Map.Entry<String, Integer> entry : selected.getMaterials().entrySet()) {
+                            fw.write("   - " + entry.getKey() + ": " + entry.getValue() + "\n");
+                        }
+                    }
+                    fw.write("\n");
+                    fw.close();
+                } catch(IOException e) {
+                    e.printStackTrace();
+                }
+
+            } else {
+                System.out.println("Invalid Input");
             }
         }
     }

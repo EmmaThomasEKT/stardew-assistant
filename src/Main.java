@@ -2,6 +2,12 @@
 // Basic seasonal budgeting for major purchases (seeds, farm animals and buildings)
 // Calculate your profit based on animals (high/low heart level), seeds,
 
+// CURRENT ISSUES:
+//      printing "invalid input" when printing stock options
+//      no lowercase/catch options for inputs
+//      need quantity option "20 Parsnip Seeds"
+//      inconsistencies when printing stock options
+
 import java.io.*;
 import java.util.Scanner;
 
@@ -56,7 +62,7 @@ public class Main {
                     marnieRanch(scanner);
                     break;
                 case 3:
-                    pierreShop(scanner);
+                    pierresShop(scanner);
                     break;
                 case 4:
                     shoppingList(scanner);
@@ -65,7 +71,8 @@ public class Main {
                     calculateTotal();
                     break;
                 case 6:
-                    return;
+                    budgeting = false;
+                    break;
                 default:
                     System.out.println("Invalid choice.");
             }
@@ -127,11 +134,6 @@ public class Main {
         }
     }
 
-    public static void pierreShop(Scanner scanner) {
-
-        System.out.println("Under Construction!");
-    }
-
     public static void shoppingList(Scanner scanner) {
 
         try (BufferedReader br = new BufferedReader(new FileReader("ShoppingList.txt"))) {
@@ -177,6 +179,38 @@ public class Main {
                 calculateTotal();
                 break;
             case 3:
+                return;
+            default:
+                System.out.println("Invalid Choice.");
+        }
+    }
+
+    public static void pierresShop(Scanner scanner) {
+
+        System.out.println("Welcome to Pierre's Shop! Please select a category (1/2/3/4/5):\n");
+        System.out.println("""
+                1. Year-Round Stock
+                2. Spring Stock
+                3. Summer Stock
+                4. Autumn Stock
+                5. Return
+                """);
+        int category = scanner.nextInt();
+
+        switch (category) {
+            case 1:
+                SeasonalBudgetManager.yearRoundStock(scanner);
+                break;
+            case 2:
+                SeasonalBudgetManager.springStock(scanner);
+                break;
+            case 3:
+                SeasonalBudgetManager.summerStock(scanner);
+                break;
+            case 4:
+                SeasonalBudgetManager.fallStock(scanner);
+                break;
+            case 5:
                 return;
             default:
                 System.out.println("Invalid Choice.");

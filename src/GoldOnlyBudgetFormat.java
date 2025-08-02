@@ -20,6 +20,6 @@ public class GoldOnlyBudgetFormat implements BudgetItem.BudgetItemImpl {
 
     @Override
     public String toString() {
-        return "Gold: " + gold + "g";
+        return "Gold: " + gold + "g\n";
     }
 }

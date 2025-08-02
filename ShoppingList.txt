@@ -1,0 +1,9 @@
+Large Pack:
+ Gold: 2000g
+
+Rice Shoot:
+ Gold: 40g
+
+Artichoke Seeds:
+ Gold: 100g
+
