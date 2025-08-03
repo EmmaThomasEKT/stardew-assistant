@@ -6,7 +6,6 @@
 //      printing "invalid input" when printing stock options
 //      no lowercase/catch options for inputs
 //      inconsistencies when printing stock options
-//      if quantity = null then item should be 1 by default
 
 import java.io.*;
 import java.util.Scanner;
@@ -83,7 +82,7 @@ public class Main {
         boolean carpenter = true;
 
         while (carpenter) {
-            System.out.println("Welcome to the Carpenter's shop! Please select a category below.");
+            System.out.println("Welcome to the Carpenter's shop! Please select a category below.\n");
             System.out.println("""
                     1. Farm Buildings
                     2. House Upgrades
@@ -91,6 +90,7 @@ public class Main {
                     4. Return
                     """);
             int category = scanner.nextInt();
+            scanner.nextLine();
 
             switch (category) {
                 case 1:
@@ -119,6 +119,7 @@ public class Main {
                 3. Return
                 """);
         int category = scanner.nextInt();
+        scanner.nextLine();
 
         switch (category) {
             case 1:
@@ -196,6 +197,7 @@ public class Main {
                 5. Return
                 """);
         int category = scanner.nextInt();
+        scanner.nextLine();
 
         switch (category) {
             case 1:

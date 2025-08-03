@@ -373,10 +373,15 @@ public class SeasonalBudgetManager {
 
         while (true) {
 
-            System.out.println("Select a seed followed by the quantity, or R to return.");
-            String springInput = scanner.nextLine();
+            System.out.println("\nSelect a seed followed by the quantity, or R to return:\n> ");
+            String springInput = scanner.nextLine().trim();
 
-            if(springInput.equalsIgnoreCase("R")) {
+            if (springInput.isEmpty()) {
+                System.out.println("Input cannot be empty.");
+                continue;
+            }
+
+            if (springInput.equalsIgnoreCase("R")) {
                 return false;
             }
 
