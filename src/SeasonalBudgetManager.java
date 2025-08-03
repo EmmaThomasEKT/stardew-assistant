@@ -293,16 +293,21 @@ public class SeasonalBudgetManager {
 
         while (true) {
 
-            System.out.println("\nPlease enter the item name to add to your list, or R to return.");
-            String itemInput = scanner.nextLine();
+            System.out.println("\nSelect a seed followed by the quantity, or R to return:\n> ");
+            String yearInput = scanner.nextLine().trim();
 
-            if(itemInput.equalsIgnoreCase("R")) {
+            if (yearInput.isEmpty()) {
+                System.out.println("Input cannot be empty.");
+                continue;
+            }
+
+            if (yearInput.equalsIgnoreCase("R")) {
                 return false;
             }
 
-            String[] parts = itemInput.trim().split(" ");
+            String[] parts = yearInput.trim().split(" ");
             if (parts.length < 2) {
-                System.out.println("Please enter both item name and quantity (e.g. Parsnip Seeds 20)");
+                System.out.println("Please enter both item name and quantity (e.g. Cherry Sapling 20)");
                 continue;
             }
 
@@ -327,7 +332,7 @@ public class SeasonalBudgetManager {
                 System.out.println(itemName + " x" + quantity + " added to your list.");
 
                 try (FileWriter fw  = new FileWriter("ShoppingList.txt", true)) {
-                    fw.write(yearRoundOptions + ":\n");
+                    fw.write(yearInput + ":\n");
                     fw.write(" Gold: " + (selected.getGold() * quantity) + "g\n");
 
                     if (!selected.getMaterials().isEmpty()) {
@@ -465,6 +470,11 @@ public class SeasonalBudgetManager {
             System.out.println("Select a seed followed by the quantity, or R to return.");
             String summerInput = scanner.nextLine();
 
+            if (summerInput.isEmpty()) {
+                System.out.println("Input cannot be empty.");
+                continue;
+            }
+
             if(summerInput.equalsIgnoreCase("R")) {
                 return false;
             }
@@ -521,8 +531,6 @@ public class SeasonalBudgetManager {
 
         Map<String, BudgetItem.BudgetItemImpl> fallOptions = new LinkedHashMap<>();
 
-        // add quantity mechanism too
-
         fallOptions.put("Eggplant Seeds", new GoldOnlyBudgetFormat(20));
         fallOptions.put("Corn", new GoldOnlyBudgetFormat(225));
         fallOptions.put("Pumpkin Seeds", new GoldOnlyBudgetFormat(100));
@@ -548,6 +556,11 @@ public class SeasonalBudgetManager {
 
             System.out.println("Select a seed followed by the quantity, or R to return.");
             String fallInput = scanner.nextLine();
+
+            if (fallInput.isEmpty()) {
+                System.out.println("Input cannot be empty.");
+                continue;
+            }
 
             if(fallInput.equalsIgnoreCase("R")) {
                 return false;

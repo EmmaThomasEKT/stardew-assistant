@@ -6,8 +6,11 @@
 //      printing "invalid input" when printing stock options
 //      no lowercase/catch options for inputs
 //      inconsistencies when printing stock options
+//      make inputs more consisent (rn return is either a number or R)
 
 import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Main {
@@ -141,7 +144,7 @@ public class Main {
             String line = br.readLine();
 
             if (line != null) {
-                System.out.println("--- Shhopping List ---\n");
+                System.out.println("--- Shopping List ---\n");
                 do {
                     System.out.println(line);
                     line = br.readLine();
@@ -220,7 +223,44 @@ public class Main {
     }
 
     public static void calculateTotal() {
-        // create a hashmap with the string item and integer quanity
-        // find a way to combine string items
+        // read through ShoppingList.txt
+        System.out.println("--- Calculate Total ---");
+
+        int totalGold = 0;
+        Map<String, Integer> materialTotals = new HashMap<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader("ShoppingList.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                line = line.trim();
+
+                //Gold line : "Gold: 100g"
+                if (line.startsWith("Gold: ")) {
+                    String goldStr = line.substring(6, line.length() - 1); // remove " Gold: " and "g"
+                    int gold = Integer.parseInt(goldStr.trim());
+                    totalGold += gold;
+
+
+                    // Material line: "- Wood: 10"
+                } else if (line.startsWith("-")) {
+                    String[] parts = line.substring(2).split(":"); // remove "- ", then split
+                    if (parts.length == 2) {
+                        String material = parts[0].trim();
+                        int amount = Integer.parseInt(parts[1].trim());
+
+                        materialTotals.put(material, materialTotals.getOrDefault(material, 0) + amount);
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // after parsing: printing totals:
+        System.out.println("Total Gold: " + totalGold + "g");
+        System.out.println("Total Materials:");
+        for (Map.Entry<String, Integer> entry : materialTotals.entrySet()) {
+            System.out.println(" - " + entry.getKey() + ": " + entry.getValue());
+        }
     }
 }

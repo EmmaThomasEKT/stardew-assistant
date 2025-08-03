@@ -1,34 +1,29 @@
-Large Pack:
- Gold: 2000g
+Garlic Seeds 9:
+ Gold: 360g
 
-Rice Shoot:
- Gold: 40g
+Rice Shoot 4:
+ Gold: 160g
 
-Artichoke Seeds:
- Gold: 100g
+Potato Seeds 24:
+ Gold: 1200g
 
-Rice Shoot 14:
- Gold: 40g
+Cauliflower Seeds 24:
+ Gold: 1920g
 
-Tulip Bulb 8:
- Gold: 20g
+Pig:
+ Gold: 16000g
 
-Rice Shoot 14:
- Gold: 560g
+Pig:
+ Gold: 16000g
 
-Artichoke Seeds 2:
- Gold: 200g
+Crib:
+ Gold: 65000g
+ Materials:
+   - Hardwood: 100
 
-{Cherry Sapling=Gold: 3400g
-, Apricot Sapling=Gold: 2000g
-, Orange Sapling=Gold: 4000g
-, Peach Sapling=Gold: 6000g
-, Pomegranate Sapling=Gold: 6000g
-, Apple Sapling=Gold: 4000g
-, Catalogue=Gold: 30000g
-, Dehydrator (Recipe)=Gold: 10000g
-, Large Pack=Gold: 2000g
-, Deluxe Pack=Gold: 10000g
-}:
+Stable:
  Gold: 10000g
+ Materials:
+   - Iron Bar: 5
+   - Hardwood: 100
 
