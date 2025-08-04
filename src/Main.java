@@ -3,10 +3,10 @@
 // Calculate your profit based on animals (high/low heart level), seeds,
 
 // CURRENT ISSUES:
-//      printing "invalid input" when printing stock options
+
 //      no lowercase/catch options for inputs
-//      inconsistencies when printing stock options
-//      make inputs more consisent (rn return is either a number or R)
+//      make inputs more consistent (rn return is either a number or R)
+//      make all navigational inputs integers, Shoppinglist.txt inputs strings/ints (parse)
 
 import java.io.*;
 import java.util.HashMap;
