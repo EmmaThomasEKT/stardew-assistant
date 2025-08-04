@@ -20,7 +20,7 @@ public class Main {
         boolean running = true;
 
         while (running) {
-            System.out.println("Welcome to Stardew Assistant!\nPlease select a tool (1/2/3/4):");
+            System.out.println("Welcome to Stardew Assistant!\n");
             System.out.println("""
                             1. Seasonal Budget Planner
                             2. Quit
@@ -46,7 +46,7 @@ public class Main {
         while (budgeting) {
             System.out.println("""
                         Welcome to seasonal budget.
-                        Please select a shop or tool to begin your seasonal budget:
+                        Please select a shop or tool to begin:
                         1. Carpenter's Shop
                         2. Marnie's Ranch
                         3. Pierre's Shop
@@ -82,9 +82,7 @@ public class Main {
     }
 
     public static void carpenterShop(Scanner scanner) {
-        boolean carpenter = true;
 
-        while (carpenter) {
             System.out.println("Welcome to the Carpenter's shop! Please select a category below.\n");
             System.out.println("""
                     1. Farm Buildings
@@ -110,12 +108,11 @@ public class Main {
                 default:
                     System.out.println("Invalid choice.");
             }
-        }
     }
 
     public static void marnieRanch(Scanner scanner) {
 
-    System.out.println("Welcome to Marnie's Ranch! Please select a category from below:\n");
+    System.out.println("Welcome to Marnie's Ranch! Please select a category (1/2/3):\n");
         System.out.println("""
                 1. Livestock
                 2. Pet Adoption
