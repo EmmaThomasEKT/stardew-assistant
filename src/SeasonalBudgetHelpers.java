@@ -1,10 +1,35 @@
-import java.io.BufferedReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class SeasonalBudgetHelpers {
+
+    public static void printOptions(Map<String, BudgetItem.BudgetItemImpl> options) {
+        for (Map.Entry<String, BudgetItem.BudgetItemImpl> entry : options.entrySet()) {
+            System.out.println(entry.getKey() + ":\n" + entry.getValue());
+        }
+    }
+
+    public static void saveToShoppingList(String buildingName, BudgetItem.BudgetItemImpl item) {
+        try (FileWriter fw = new FileWriter("ShoppingList.txt", true)) {
+            fw.write(buildingName + ":\n");
+            fw.write(" Gold: " + item.getGold() + "g\n");
+
+            if (!item.getMaterials().isEmpty()) {
+                fw.write(" Materials:\n");
+                for (Map.Entry<String, Integer> entry : item.getMaterials().entrySet()) {
+                    fw.write("   - " + entry.getKey() + ": " + entry.getValue() + "\n");
+                }
+            }
+            fw.write("\n");
+            fw.close();
+
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static Map<String, BudgetItem.BudgetItemImpl> createFarmBuildingOptions() {
 
@@ -35,28 +60,75 @@ public class SeasonalBudgetHelpers {
         return buildingOptions;
     }
 
-    public static void printBuildingOptions(Map<String, BudgetItem.BudgetItemImpl> options) {
-        for (Map.Entry<String, BudgetItem.BudgetItemImpl> entry : options.entrySet()) {
-            System.out.println(entry.getKey() + ":\n" + entry.getValue());
-        }
+    public static Map<String, BudgetItem.BudgetItemImpl> createHouseUpgradeOptions() {
+        Map<String, BudgetItem.BudgetItemImpl> houseOptions = new LinkedHashMap<>();
+
+        houseOptions.put("Kitchen", new SeasonalBudgetFormat(10000, Map.of("Wood", 450)));
+        houseOptions.put("Crib", new SeasonalBudgetFormat(65000, Map.of("Hardwood", 100)));
+        houseOptions.put("Basement", new GoldOnlyBudgetFormat(100000));
+
+        return houseOptions;
     }
 
-    public static void saveToShoppingList(String buildingName, BudgetItem.BudgetItemImpl item) {
-        try (FileWriter fw = new FileWriter("ShoppingList.txt", true)) {
-            fw.write(buildingName + ":\n");
-            fw.write(" Gold: " + item.getGold() + "g\n");
+    public static Map<String, BudgetItem.BudgetItemImpl> createHouseRenoOptions() {
+        Map<String, BudgetItem.BudgetItemImpl> houseRenoOptions = new LinkedHashMap<>();
 
-            if (!item.getMaterials().isEmpty()) {
-                fw.write(" Materials:\n");
-                for (Map.Entry<String, Integer> entry : item.getMaterials().entrySet()) {
-                    fw.write("   - " + entry.getKey() + ": " + entry.getValue() + "\n");
-                }
-            }
-            fw.write("\n");
-            fw.close();
+        houseRenoOptions.put("Open Bedroom", new GoldOnlyBudgetFormat(10000));
+        houseRenoOptions.put("Add Southern Room", new GoldOnlyBudgetFormat(30000));
+        houseRenoOptions.put("Add Corner Room", new GoldOnlyBudgetFormat(20000));
 
-        } catch(IOException e) {
-            e.printStackTrace();
-        }
+        houseRenoOptions.put("Add Dining Room", new GoldOnlyBudgetFormat(150000));
+        houseRenoOptions.put("Add Cubby", new GoldOnlyBudgetFormat(10000));
+        houseRenoOptions.put("Add Attic", new GoldOnlyBudgetFormat(60000));
+
+        houseRenoOptions.put("Expand Corner Room", new GoldOnlyBudgetFormat(100000));
+        houseRenoOptions.put("Open Dining Room", new GoldOnlyBudgetFormat(10000));
+
+        return houseRenoOptions;
+    }
+
+    public static Map<String, BudgetItem.BudgetItemImpl> createLivestockOptions() {
+        Map<String, BudgetItem.BudgetItemImpl> livestockOptions = new LinkedHashMap<>();
+
+        livestockOptions.put("Chicken", new GoldOnlyBudgetFormat(800));
+        livestockOptions.put("Cow", new GoldOnlyBudgetFormat(1500));
+        livestockOptions.put("Goat", new GoldOnlyBudgetFormat(4000));
+
+        livestockOptions.put("Duck", new GoldOnlyBudgetFormat(1200));
+        livestockOptions.put("Sheep", new GoldOnlyBudgetFormat(8000));
+        livestockOptions.put("Rabbit", new GoldOnlyBudgetFormat(8000));
+        livestockOptions.put("Pig", new GoldOnlyBudgetFormat(16000));
+
+        return livestockOptions;
+    }
+
+    public static Map<String, BudgetItem.BudgetItemImpl> createPetAdoptionOptions() {
+        Map<String, BudgetItem.BudgetItemImpl> petAdoptionOptions = new LinkedHashMap<>();
+
+        petAdoptionOptions.put("Cat", new GoldOnlyBudgetFormat(40000));
+        petAdoptionOptions.put("Dog", new GoldOnlyBudgetFormat(40000));
+        petAdoptionOptions.put("Turtle", new GoldOnlyBudgetFormat(60000));
+        petAdoptionOptions.put("Special Turtle", new GoldOnlyBudgetFormat(500000));
+
+        return petAdoptionOptions;
+    }
+
+    public static Map<String, BudgetItem.BudgetItemImpl> createYearRoundStockOptions() {
+        Map<String, BudgetItem.BudgetItemImpl> yearRoundOptions = new LinkedHashMap<>();
+
+        yearRoundOptions.put("Cherry Sapling", new GoldOnlyBudgetFormat(3400));
+        yearRoundOptions.put("Apricot Sapling", new GoldOnlyBudgetFormat(2000));
+        yearRoundOptions.put("Orange Sapling", new GoldOnlyBudgetFormat(4000));
+        yearRoundOptions.put("Peach Sapling", new GoldOnlyBudgetFormat(6000));
+        yearRoundOptions.put("Pomegranate Sapling", new GoldOnlyBudgetFormat(6000));
+        yearRoundOptions.put("Apple Sapling", new GoldOnlyBudgetFormat(4000));
+
+        yearRoundOptions.put("Catalogue", new GoldOnlyBudgetFormat(30000));
+        yearRoundOptions.put("Dehydrator (Recipe)", new GoldOnlyBudgetFormat(10000));
+
+        yearRoundOptions.put("Large Pack", new GoldOnlyBudgetFormat(2000));
+        yearRoundOptions.put("Deluxe Pack", new GoldOnlyBudgetFormat(10000));
+
+        return yearRoundOptions;
     }
 }

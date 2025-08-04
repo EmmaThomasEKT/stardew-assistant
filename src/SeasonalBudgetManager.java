@@ -1,4 +1,3 @@
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
@@ -9,7 +8,7 @@ public class SeasonalBudgetManager {
         Map<String, BudgetItem.BudgetItemImpl> buildingOptions = SeasonalBudgetHelpers.createFarmBuildingOptions();
 
         System.out.println("Here are the available farm buildings:\n");
-        SeasonalBudgetHelpers.printBuildingOptions(buildingOptions);
+        SeasonalBudgetHelpers.printOptions(buildingOptions);
 
         while (true) {
 
@@ -31,16 +30,10 @@ public class SeasonalBudgetManager {
 
     public static boolean houseUpgrades(Scanner scanner) {
 
-        Map<String, BudgetItem.BudgetItemImpl> houseOptions = new LinkedHashMap<>();
-
-        houseOptions.put("Kitchen", new SeasonalBudgetFormat(10000, Map.of("Wood", 450)));
-        houseOptions.put("Crib", new SeasonalBudgetFormat(65000, Map.of("Hardwood", 100)));
-        houseOptions.put("Basement", new GoldOnlyBudgetFormat(100000));
+        Map<String, BudgetItem.BudgetItemImpl> houseOptions = SeasonalBudgetHelpers.createHouseUpgradeOptions();
 
         System.out.println("Here are the available house upgrades:\n");
-        for (Map.Entry<String, BudgetItem.BudgetItemImpl> entry : houseOptions.entrySet()) {
-            System.out.println(entry.getKey() + ":\n" + entry.getValue());
-        }
+        SeasonalBudgetHelpers.printOptions(houseOptions);
 
         while (true) {
 
@@ -53,23 +46,7 @@ public class SeasonalBudgetManager {
                 BudgetItem.BudgetItemImpl selected = houseOptions.get(upgradeInput);
                 // add selected to user's list
                 System.out.println(upgradeInput + " added to your list.");
-
-                try (FileWriter fw = new FileWriter("ShoppingList.txt", true)) {
-                    fw.write(upgradeInput + ":\n");
-                    fw.write(" Gold: " + selected.getGold() + "g\n");
-
-                    if (!selected.getMaterials().isEmpty()) {
-                        fw.write(" Materials:\n");
-                        for (Map.Entry<String, Integer> entry : selected.getMaterials().entrySet()) {
-                            fw.write("   - " + entry.getKey() + ": " + entry.getValue() + "\n");
-                        }
-                    }
-                    fw.write("\n");
-                    fw.close();
-
-                } catch(IOException e) {
-                    e.printStackTrace();
-                }
+                SeasonalBudgetHelpers.saveToShoppingList(upgradeInput, selected);
             } else {
                 System.out.println("Invalid selection.");
             }
@@ -78,23 +55,10 @@ public class SeasonalBudgetManager {
 
     public static boolean houseRenovations(Scanner scanner) {
 
-        Map<String, BudgetItem.BudgetItemImpl> houseRenoOptions = new LinkedHashMap<>();
-
-        houseRenoOptions.put("Open Bedroom", new GoldOnlyBudgetFormat(10000));
-        houseRenoOptions.put("Add Southern Room", new GoldOnlyBudgetFormat(30000));
-        houseRenoOptions.put("Add Corner Room", new GoldOnlyBudgetFormat(20000));
-
-        houseRenoOptions.put("Add Dining Room", new GoldOnlyBudgetFormat(150000));
-        houseRenoOptions.put("Add Cubby", new GoldOnlyBudgetFormat(10000));
-        houseRenoOptions.put("Add Attic", new GoldOnlyBudgetFormat(60000));
-
-        houseRenoOptions.put("Expand Corner Room", new GoldOnlyBudgetFormat(100000));
-        houseRenoOptions.put("Open Dining Room", new GoldOnlyBudgetFormat(10000));
+        Map<String, BudgetItem.BudgetItemImpl> houseRenoOptions = SeasonalBudgetHelpers.createHouseRenoOptions();
 
         System.out.println("Here are the available house renovations:\n");
-        for (Map.Entry<String, BudgetItem.BudgetItemImpl> entry : houseRenoOptions.entrySet()) {
-            System.out.println(entry.getKey() + ":\n" + entry.getValue());
-        }
+        SeasonalBudgetHelpers.printOptions(houseRenoOptions);
 
         while (true) {
 
@@ -107,23 +71,7 @@ public class SeasonalBudgetManager {
                 BudgetItem.BudgetItemImpl selected = houseRenoOptions.get(renoInput);
                 // add selected to user's list
                 System.out.println(renoInput + " added to your list.");
-
-                try (FileWriter fw = new FileWriter("ShoppingList.txt", true)) {
-                    fw.write(renoInput + ":\n");
-                    fw.write(" Gold: " + selected.getGold() + "g\n");
-
-                    if (!selected.getMaterials().isEmpty()) {
-                        fw.write(" Materials:\n");
-                        for (Map.Entry<String, Integer> entry : selected.getMaterials().entrySet()) {
-                            fw.write("   - " + entry.getKey() + ": " + entry.getValue() + "\n");
-                        }
-                    }
-                    fw.write("\n");
-                    fw.close();
-
-                } catch(IOException e) {
-                    e.printStackTrace();
-                }
+                SeasonalBudgetHelpers.saveToShoppingList(renoInput, selected);
             } else {
                 System.out.println("Invalid selection.");
             }
@@ -132,21 +80,10 @@ public class SeasonalBudgetManager {
     }
 
     public static boolean livestock(Scanner scanner) {
-        Map<String, BudgetItem.BudgetItemImpl> livestockOptions = new LinkedHashMap<>();
-
-        livestockOptions.put("Chicken", new GoldOnlyBudgetFormat(800));
-        livestockOptions.put("Cow", new GoldOnlyBudgetFormat(1500));
-        livestockOptions.put("Goat", new GoldOnlyBudgetFormat(4000));
-
-        livestockOptions.put("Duck", new GoldOnlyBudgetFormat(1200));
-        livestockOptions.put("Sheep", new GoldOnlyBudgetFormat(8000));
-        livestockOptions.put("Rabbit", new GoldOnlyBudgetFormat(8000));
-        livestockOptions.put("Pig", new GoldOnlyBudgetFormat(16000));
+        Map<String, BudgetItem.BudgetItemImpl> livestockOptions = SeasonalBudgetHelpers.createLivestockOptions();
 
         System.out.println("Here are the available livestock:\n");
-        for (Map.Entry<String, BudgetItem.BudgetItemImpl> entry : livestockOptions.entrySet()) {
-            System.out.println(entry.getKey() + ":\n" + entry.getValue());
-        }
+        SeasonalBudgetHelpers.printOptions(livestockOptions);
 
         while (true) {
 
@@ -159,23 +96,7 @@ public class SeasonalBudgetManager {
                 BudgetItem.BudgetItemImpl selected = livestockOptions.get(livestockInput);
                 // add selected to user's list
                 System.out.println(livestockInput + " added to your list.");
-
-                try (FileWriter fw = new FileWriter("ShoppingList.txt", true)) {
-                    fw.write(livestockInput + ":\n");
-                    fw.write(" Gold: " + selected.getGold() + "g\n");
-
-                    if (!selected.getMaterials().isEmpty()) {
-                        fw.write(" Materials:\n");
-                        for (Map.Entry<String, Integer> entry : selected.getMaterials().entrySet()) {
-                            fw.write("   - " + entry.getKey() + ": " + entry.getValue() + "\n");
-                        }
-                    }
-                    fw.write("\n");
-                    fw.close();
-
-                } catch(IOException e) {
-                    e.printStackTrace();
-                }
+                SeasonalBudgetHelpers.saveToShoppingList(livestockInput, selected);
             } else {
                 System.out.println("Invalid selection.");
             }
@@ -184,17 +105,10 @@ public class SeasonalBudgetManager {
 
     public static boolean petAdoption(Scanner scanner) {
 
-        Map<String, BudgetItem.BudgetItemImpl> petAdoptionOptions = new LinkedHashMap<>();
-
-        petAdoptionOptions.put("Cat", new GoldOnlyBudgetFormat(40000));
-        petAdoptionOptions.put("Dog", new GoldOnlyBudgetFormat(40000));
-        petAdoptionOptions.put("Turtle", new GoldOnlyBudgetFormat(60000));
-        petAdoptionOptions.put("Special Turtle", new GoldOnlyBudgetFormat(500000));
+        Map<String, BudgetItem.BudgetItemImpl> petAdoptionOptions = SeasonalBudgetHelpers.createPetAdoptionOptions();
 
         System.out.println("Here are the available pets:\n");
-        for (Map.Entry<String, BudgetItem.BudgetItemImpl> entry : petAdoptionOptions.entrySet()) {
-            System.out.println(entry.getKey() + ":\n" + entry.getValue());
-        }
+        SeasonalBudgetHelpers.printOptions(petAdoptionOptions);
 
         while (true) {
 
@@ -207,22 +121,7 @@ public class SeasonalBudgetManager {
                 BudgetItem.BudgetItemImpl selected = petAdoptionOptions.get(petInput);
 
                 System.out.println(petInput + " added to your list.");
-
-                try (FileWriter fw = new FileWriter("ShoppingList.txt", true)) {
-                    fw.write(petInput + ":\n");
-                    fw.write(" Gold: " + selected.getGold() + "g\n");
-
-                    if (!selected.getMaterials().isEmpty()) {
-                        fw.write(" Materials:\n");
-                        for (Map.Entry<String, Integer> entry : selected.getMaterials().entrySet()) {
-                            fw.write("   - " + entry.getKey() + ": " + entry.getValue() + "\n");
-                        }
-                    }
-                    fw.write("\n");
-                    fw.close();
-                } catch(IOException e) {
-                    e.printStackTrace();
-                }
+                SeasonalBudgetHelpers.saveToShoppingList(petInput, selected);
             } else {
                 System.out.println("Invalid selection.");
             }
@@ -231,25 +130,10 @@ public class SeasonalBudgetManager {
 
     public static boolean yearRoundStock(Scanner scanner) {
 
-        Map<String, BudgetItem.BudgetItemImpl> yearRoundOptions = new LinkedHashMap<>();
-
-        yearRoundOptions.put("Cherry Sapling", new GoldOnlyBudgetFormat(3400));
-        yearRoundOptions.put("Apricot Sapling", new GoldOnlyBudgetFormat(2000));
-        yearRoundOptions.put("Orange Sapling", new GoldOnlyBudgetFormat(4000));
-        yearRoundOptions.put("Peach Sapling", new GoldOnlyBudgetFormat(6000));
-        yearRoundOptions.put("Pomegranate Sapling", new GoldOnlyBudgetFormat(6000));
-        yearRoundOptions.put("Apple Sapling", new GoldOnlyBudgetFormat(4000));
-
-        yearRoundOptions.put("Catalogue", new GoldOnlyBudgetFormat(30000));
-        yearRoundOptions.put("Dehydrator (Recipe)", new GoldOnlyBudgetFormat(10000));
-
-        yearRoundOptions.put("Large Pack", new GoldOnlyBudgetFormat(2000));
-        yearRoundOptions.put("Deluxe Pack", new GoldOnlyBudgetFormat(10000));
+        Map<String, BudgetItem.BudgetItemImpl> yearRoundOptions = SeasonalBudgetHelpers.createYearRoundStockOptions();
 
         System.out.println("Here are the available items:\n");
-        for (Map.Entry<String, BudgetItem.BudgetItemImpl> entry : yearRoundOptions.entrySet()) {
-            System.out.println(entry.getKey() +"\n" + entry.getValue());
-        }
+        SeasonalBudgetHelpers.printOptions(yearRoundOptions);
 
         while (true) {
 
@@ -290,22 +174,7 @@ public class SeasonalBudgetManager {
                 BudgetItem.BudgetItemImpl selected = yearRoundOptions.get(itemName);
 
                 System.out.println(itemName + " x" + quantity + " added to your list.");
-
-                try (FileWriter fw  = new FileWriter("ShoppingList.txt", true)) {
-                    fw.write(yearInput + ":\n");
-                    fw.write(" Gold: " + (selected.getGold() * quantity) + "g\n");
-
-                    if (!selected.getMaterials().isEmpty()) {
-                        fw.write(" Materials:\n");
-                        for (Map.Entry<String, Integer> entry : selected.getMaterials().entrySet()) {
-                            fw.write("   - " + entry.getKey() + ": " + (entry.getValue() * quantity) + "\n");
-                        }
-                    }
-                    fw.write("\n");
-                    fw.close();
-                } catch(IOException e) {
-                    e.printStackTrace();
-                }
+                SeasonalBudgetHelpers.saveToShoppingList(itemName, selected);
 
             } else {
                 System.out.println("Invalid Input");
