@@ -27,3 +27,8 @@ Stable:
    - Iron Bar: 5
    - Hardwood: 100
 
+Pet Bowl:
+ Gold: 5000g
+ Materials:
+   - Hardwood: 25
+
