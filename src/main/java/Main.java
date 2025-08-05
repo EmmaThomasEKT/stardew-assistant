@@ -152,7 +152,7 @@ public class Main {
             }
 
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(); // control what happens when exceptions occur: use a logging framework
         }
 
         System.out.println("Please select an option from below (1/2/3):\n" +
