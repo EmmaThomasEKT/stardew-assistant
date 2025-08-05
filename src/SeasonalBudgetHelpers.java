@@ -1,5 +1,6 @@
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.AbstractMap;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -12,10 +13,10 @@ public class SeasonalBudgetHelpers {
         }
     }
 
-    public static void saveToShoppingList(String buildingName, BudgetItem.BudgetItemImpl item) {
+    public static void saveToShoppingList(String itemName, BudgetItem.BudgetItemImpl item, int quantity) {
         try (FileWriter fw = new FileWriter("ShoppingList.txt", true)) {
-            fw.write(buildingName + ":\n");
-            fw.write(" Gold: " + item.getGold() + "g\n");
+            fw.write(itemName + " x" + quantity + "g\n");
+            fw.write(" Gold: " + (item.getGold() * quantity) + "g\n");
 
             if (!item.getMaterials().isEmpty()) {
                 fw.write(" Materials:\n");
@@ -29,6 +30,30 @@ public class SeasonalBudgetHelpers {
         } catch(IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static Map.Entry<String, Integer> parseItemAndQuantity(String input) {
+        String[] parts = input.trim().split(" ");
+        if (parts.length < 2) {
+            System.out.println("Please enter both item name and quantity (e.g. Cherry Sapling 20)");
+            return null;
+        }
+
+        String quantityStr = parts[parts.length -1];
+        int quantity;
+        try {
+            quantity = Integer.parseInt(quantityStr);
+            if (quantity <= 0) {
+                System.out.println("Quantity must be a positive number.");
+                return null;
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid quantity. Please enter a number at the end.");
+            return null;
+        }
+
+        String itemName = String.join(" ", Arrays.copyOf(parts, parts.length - 1));
+        return new AbstractMap.SimpleEntry<>(itemName, quantity);
     }
 
     public static Map<String, BudgetItem.BudgetItemImpl> createFarmBuildingOptions() {

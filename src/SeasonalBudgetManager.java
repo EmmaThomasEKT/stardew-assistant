@@ -21,7 +21,7 @@ public class SeasonalBudgetManager {
                 BudgetItem.BudgetItemImpl selected = buildingOptions.get(buildingInput);
                 // add selected to user's list
                 System.out.println(buildingInput + " added to your list.");
-                SeasonalBudgetHelpers.saveToShoppingList(buildingInput, selected);
+                SeasonalBudgetHelpers.saveToShoppingList(buildingInput, selected, 1);
             } else {
                 System.out.println("Invalid selection.");
             }
@@ -46,7 +46,7 @@ public class SeasonalBudgetManager {
                 BudgetItem.BudgetItemImpl selected = houseOptions.get(upgradeInput);
                 // add selected to user's list
                 System.out.println(upgradeInput + " added to your list.");
-                SeasonalBudgetHelpers.saveToShoppingList(upgradeInput, selected);
+                SeasonalBudgetHelpers.saveToShoppingList(upgradeInput, selected, 1);
             } else {
                 System.out.println("Invalid selection.");
             }
@@ -71,7 +71,7 @@ public class SeasonalBudgetManager {
                 BudgetItem.BudgetItemImpl selected = houseRenoOptions.get(renoInput);
                 // add selected to user's list
                 System.out.println(renoInput + " added to your list.");
-                SeasonalBudgetHelpers.saveToShoppingList(renoInput, selected);
+                SeasonalBudgetHelpers.saveToShoppingList(renoInput, selected, 1);
             } else {
                 System.out.println("Invalid selection.");
             }
@@ -96,7 +96,7 @@ public class SeasonalBudgetManager {
                 BudgetItem.BudgetItemImpl selected = livestockOptions.get(livestockInput);
                 // add selected to user's list
                 System.out.println(livestockInput + " added to your list.");
-                SeasonalBudgetHelpers.saveToShoppingList(livestockInput, selected);
+                SeasonalBudgetHelpers.saveToShoppingList(livestockInput, selected, 1);
             } else {
                 System.out.println("Invalid selection.");
             }
@@ -121,7 +121,7 @@ public class SeasonalBudgetManager {
                 BudgetItem.BudgetItemImpl selected = petAdoptionOptions.get(petInput);
 
                 System.out.println(petInput + " added to your list.");
-                SeasonalBudgetHelpers.saveToShoppingList(petInput, selected);
+                SeasonalBudgetHelpers.saveToShoppingList(petInput, selected, 1);
             } else {
                 System.out.println("Invalid selection.");
             }
@@ -149,32 +149,17 @@ public class SeasonalBudgetManager {
                 return false;
             }
 
-            String[] parts = yearInput.trim().split(" ");
-            if (parts.length < 2) {
-                System.out.println("Please enter both item name and quantity (e.g. Cherry Sapling 20)");
-                continue;
-            }
+            Map.Entry<String, Integer> result = SeasonalBudgetHelpers.parseItemAndQuantity(yearInput);
+            if (result == null) continue; // error already printed
 
-            String quantityStr = parts[parts.length -1];
-            int quantity;
-            try {
-                quantity = Integer.parseInt(quantityStr);
-                if (quantity <= 0) {
-                    System.out.println("Quantity must be a positive number.");
-                    continue;
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid quantity. Please enter a number at the end.");
-                continue;
-            }
-
-            String itemName = String.join(" ", Arrays.copyOf(parts, parts.length - 1));
+            String itemName = result.getKey();
+            int quantity = result.getValue();
 
             if (yearRoundOptions.containsKey(itemName)) {
                 BudgetItem.BudgetItemImpl selected = yearRoundOptions.get(itemName);
 
                 System.out.println(itemName + " x" + quantity + " added to your list.");
-                SeasonalBudgetHelpers.saveToShoppingList(itemName, selected);
+                SeasonalBudgetHelpers.saveToShoppingList(itemName, selected, quantity);
 
             } else {
                 System.out.println("Invalid Input");

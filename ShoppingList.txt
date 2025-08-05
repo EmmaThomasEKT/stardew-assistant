@@ -32,3 +32,19 @@ Pet Bowl:
  Materials:
    - Hardwood: 25
 
+Deluxe Pack:
+ Gold: 10000g
+
+Apricot Sapling:
+ Gold: 2000g
+
+Slime Hutch x1g
+ Gold: 10000g
+ Materials:
+   - Stone: 500
+   - Iridium Bar: 1
+   - Refined Quartz: 10
+
+Orange Sapling x4g
+ Gold: 16000g
+
