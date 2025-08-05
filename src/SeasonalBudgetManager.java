@@ -169,26 +169,10 @@ public class SeasonalBudgetManager {
 
     public static boolean springStock(Scanner scanner) {
 
-        Map<String, BudgetItem.BudgetItemImpl> springOptions = new LinkedHashMap<>();
-
-        // add quantity mechanism too
-
-        springOptions.put("Parsnip Seeds", new GoldOnlyBudgetFormat(20));
-        springOptions.put("Bean Starter", new GoldOnlyBudgetFormat(60));
-        springOptions.put("Cauliflower Seeds", new GoldOnlyBudgetFormat(80));
-
-        springOptions.put("Potato Seeds", new GoldOnlyBudgetFormat(50));
-        springOptions.put("Tulip Bulb", new GoldOnlyBudgetFormat(20));
-        springOptions.put("Kale Seeds", new GoldOnlyBudgetFormat(70));
-
-        springOptions.put("Jazz Seeds", new GoldOnlyBudgetFormat(30));
-        springOptions.put("Garlic Seeds", new GoldOnlyBudgetFormat(40));
-        springOptions.put("Rice Shoot", new GoldOnlyBudgetFormat(40));
+        Map<String, BudgetItem.BudgetItemImpl> springOptions = SeasonalBudgetHelpers.createSpringStock();
 
         System.out.println("Here are the available seeds:\n");
-        for (Map.Entry<String, BudgetItem.BudgetItemImpl> entry : springOptions.entrySet()) {
-            System.out.println(entry.getKey() +"\n" + entry.getValue());
-        }
+        SeasonalBudgetHelpers.printOptions(springOptions);
 
         while (true) {
 
@@ -204,47 +188,17 @@ public class SeasonalBudgetManager {
                 return false;
             }
 
-            String[] parts = springInput.trim().split(" ");
-            if (parts.length < 2) {
-                System.out.println("Please enter both item name and quantity (e.g. Parsnip Seeds 20)");
-                continue;
-            }
+            Map.Entry<String, Integer> result = SeasonalBudgetHelpers.parseItemAndQuantity(springInput);
+            if (result == null) continue;
 
-            String quantityStr = parts[parts.length -1];
-            int quantity;
-            try {
-                quantity = Integer.parseInt(quantityStr);
-                if (quantity <= 0) {
-                    System.out.println("Quantity must be a positive number.");
-                    continue;
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid quantity. Please enter a number at the end.");
-                continue;
-            }
-
-            String itemName = String.join(" ", Arrays.copyOf(parts, parts.length - 1));
+            String itemName = result.getKey();
+            int quantity = result.getValue();
 
             if (springOptions.containsKey(itemName)) {
                 BudgetItem.BudgetItemImpl selected = springOptions.get(itemName);
 
                 System.out.println(itemName + " x" + quantity + " added to your list.");
-
-                try (FileWriter fw  = new FileWriter("ShoppingList.txt", true)) {
-                    fw.write(springInput + ":\n");
-                    fw.write(" Gold: " + (selected.getGold() * quantity) + "g\n");
-
-                    if (!selected.getMaterials().isEmpty()) {
-                        fw.write(" Materials:\n");
-                        for (Map.Entry<String, Integer> entry : selected.getMaterials().entrySet()) {
-                            fw.write("   - " + entry.getKey() + ": " + (entry.getValue() * quantity) + "\n");
-                        }
-                    }
-                    fw.write("\n");
-                    fw.close();
-                } catch(IOException e) {
-                    e.printStackTrace();
-                }
+                SeasonalBudgetHelpers.saveToShoppingList(itemName, selected, quantity);
 
             } else {
                 System.out.println("Invalid Input");
@@ -254,30 +208,10 @@ public class SeasonalBudgetManager {
 
     public static boolean summerStock(Scanner scanner) {
 
-        Map<String, BudgetItem.BudgetItemImpl> summerOptions = new LinkedHashMap<>();
-
-        // add quantity mechanism too
-
-        summerOptions.put("Melon Seeds", new GoldOnlyBudgetFormat(80));
-        summerOptions.put("Tomato Seeds", new GoldOnlyBudgetFormat(50));
-        summerOptions.put("Blueberry Seeds", new GoldOnlyBudgetFormat(80));
-
-        summerOptions.put("Pepper Seeds", new GoldOnlyBudgetFormat(40));
-        summerOptions.put("Wheat Seeds", new GoldOnlyBudgetFormat(10));
-        summerOptions.put("Radish Seeds", new GoldOnlyBudgetFormat(40));
-
-        summerOptions.put("Poppy Seeds", new GoldOnlyBudgetFormat(100));
-        summerOptions.put("Spangle Seeds", new GoldOnlyBudgetFormat(50));
-        summerOptions.put("Hops Starer", new GoldOnlyBudgetFormat(60));
-
-        summerOptions.put("Corn Seeds", new GoldOnlyBudgetFormat(150));
-        summerOptions.put("Sunflower Seeds", new GoldOnlyBudgetFormat(200));
-        summerOptions.put("Red Cabbage Seeds", new GoldOnlyBudgetFormat(100));
+        Map<String, BudgetItem.BudgetItemImpl> summerOptions = SeasonalBudgetHelpers.createSummerStock();
 
         System.out.println("Here are the available seeds:\n");
-        for (Map.Entry<String, BudgetItem.BudgetItemImpl> entry : summerOptions.entrySet()) {
-            System.out.println(entry.getKey() +"\n" + entry.getValue());
-        }
+        SeasonalBudgetHelpers.printOptions(summerOptions);
 
         while (true) {
 
@@ -293,47 +227,17 @@ public class SeasonalBudgetManager {
                 return false;
             }
 
-            String[] parts = summerInput.trim().split(" ");
-            if (parts.length < 2) {
-                System.out.println("Please enter both item name and quantity (e.g. Melon Seeds 20)");
-                continue;
-            }
+            Map.Entry<String, Integer> result = SeasonalBudgetHelpers.parseItemAndQuantity(summerInput);
+            if (result == null) continue;
 
-            String quantityStr = parts[parts.length -1];
-            int quantity;
-            try {
-                quantity = Integer.parseInt(quantityStr);
-                if (quantity <= 0) {
-                    System.out.println("Quantity must be a positive number.");
-                    continue;
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid quantity. Please enter a number at the end.");
-                continue;
-            }
-
-            String itemName = String.join(" ", Arrays.copyOf(parts, parts.length - 1));
+            String itemName = result.getKey();
+            int quantity = result.getValue();
 
             if (summerOptions.containsKey(itemName)) {
                 BudgetItem.BudgetItemImpl selected = summerOptions.get(itemName);
 
                 System.out.println(itemName + " x" + quantity + " added to your list.");
-
-                try (FileWriter fw  = new FileWriter("ShoppingList.txt", true)) {
-                    fw.write(summerInput + ":\n");
-                    fw.write(" Gold: " + (selected.getGold() * quantity) + "g\n");
-
-                    if (!selected.getMaterials().isEmpty()) {
-                        fw.write(" Materials:\n");
-                        for (Map.Entry<String, Integer> entry : selected.getMaterials().entrySet()) {
-                            fw.write("   - " + entry.getKey() + ": " + (entry.getValue() * quantity) + "\n");
-                        }
-                    }
-                    fw.write("\n");
-                    fw.close();
-                } catch(IOException e) {
-                    e.printStackTrace();
-                }
+                SeasonalBudgetHelpers.saveToShoppingList(itemName, selected, quantity);
 
             } else {
                 System.out.println("Invalid Input");
@@ -343,28 +247,10 @@ public class SeasonalBudgetManager {
 
     public static boolean fallStock(Scanner scanner) {
 
-        Map<String, BudgetItem.BudgetItemImpl> fallOptions = new LinkedHashMap<>();
-
-        fallOptions.put("Eggplant Seeds", new GoldOnlyBudgetFormat(20));
-        fallOptions.put("Corn", new GoldOnlyBudgetFormat(225));
-        fallOptions.put("Pumpkin Seeds", new GoldOnlyBudgetFormat(100));
-
-        fallOptions.put("Bokchoy Seeds", new GoldOnlyBudgetFormat(50));
-        fallOptions.put("Yam Seeds", new GoldOnlyBudgetFormat(60));
-        fallOptions.put("Cranberry Seeds", new GoldOnlyBudgetFormat(240));
-
-        fallOptions.put("Sunflower Seeds", new GoldOnlyBudgetFormat(100));
-        fallOptions.put("Fairy Seeds", new GoldOnlyBudgetFormat(50));
-        fallOptions.put("Amaranth Starer", new GoldOnlyBudgetFormat(60));
-
-        fallOptions.put("Grape Starter", new GoldOnlyBudgetFormat(150));
-        fallOptions.put("Wheat Seeds", new GoldOnlyBudgetFormat(10));
-        fallOptions.put("Artichoke Seeds", new GoldOnlyBudgetFormat(100));
+        Map<String, BudgetItem.BudgetItemImpl> fallOptions = SeasonalBudgetHelpers.createFallStock();
 
         System.out.println("Here are the available seeds:\n");
-        for (Map.Entry<String, BudgetItem.BudgetItemImpl> entry : fallOptions.entrySet()) {
-            System.out.println(entry.getKey() +"\n" + entry.getValue());
-        }
+        SeasonalBudgetHelpers.printOptions(fallOptions);
 
         while (true) {
 
@@ -380,47 +266,17 @@ public class SeasonalBudgetManager {
                 return false;
             }
 
-            String[] parts = fallInput.trim().split(" ");
-            if (parts.length < 2) {
-                System.out.println("Please enter both item name and quantity (e.g. Eggplant Seeds 20)");
-                continue;
-            }
+            Map.Entry<String, Integer> result = SeasonalBudgetHelpers.parseItemAndQuantity(fallInput);
+            if (result == null) continue;
 
-            String quantityStr = parts[parts.length -1];
-            int quantity;
-            try {
-                quantity = Integer.parseInt(quantityStr);
-                if (quantity <= 0) {
-                    System.out.println("Quantity must be a positive number.");
-                    continue;
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid quantity. Please enter a number at the end.");
-                continue;
-            }
-
-            String itemName = String.join(" ", Arrays.copyOf(parts, parts.length - 1));
+            String itemName = result.getKey();
+            int quantity = result.getValue();
 
             if (fallOptions.containsKey(itemName)) {
                 BudgetItem.BudgetItemImpl selected = fallOptions.get(itemName);
 
                 System.out.println(itemName + " x" + quantity + " added to your list.");
-
-                try (FileWriter fw  = new FileWriter("ShoppingList.txt", true)) {
-                    fw.write(fallInput + ":\n");
-                    fw.write(" Gold: " + (selected.getGold() * quantity) + "g\n");
-
-                    if (!selected.getMaterials().isEmpty()) {
-                        fw.write(" Materials:\n");
-                        for (Map.Entry<String, Integer> entry : selected.getMaterials().entrySet()) {
-                            fw.write("   - " + entry.getKey() + ": " + (entry.getValue() * quantity) + "\n");
-                        }
-                    }
-                    fw.write("\n");
-                    fw.close();
-                } catch(IOException e) {
-                    e.printStackTrace();
-                }
+                SeasonalBudgetHelpers.saveToShoppingList(itemName, selected, quantity);
 
             } else {
                 System.out.println("Invalid Input");

@@ -156,4 +156,66 @@ public class SeasonalBudgetHelpers {
 
         return yearRoundOptions;
     }
+
+    public static Map<String, BudgetItem.BudgetItemImpl> createSpringStock() {
+        Map<String, BudgetItem.BudgetItemImpl> springOptions = new LinkedHashMap<>();
+
+        springOptions.put("Parsnip Seeds", new GoldOnlyBudgetFormat(20));
+        springOptions.put("Bean Starter", new GoldOnlyBudgetFormat(60));
+        springOptions.put("Cauliflower Seeds", new GoldOnlyBudgetFormat(80));
+
+        springOptions.put("Potato Seeds", new GoldOnlyBudgetFormat(50));
+        springOptions.put("Tulip Bulb", new GoldOnlyBudgetFormat(20));
+        springOptions.put("Kale Seeds", new GoldOnlyBudgetFormat(70));
+
+        springOptions.put("Jazz Seeds", new GoldOnlyBudgetFormat(30));
+        springOptions.put("Garlic Seeds", new GoldOnlyBudgetFormat(40));
+        springOptions.put("Rice Shoot", new GoldOnlyBudgetFormat(40));
+
+        return springOptions;
+    }
+
+    public static Map<String, BudgetItem.BudgetItemImpl> createSummerStock() {
+        Map<String, BudgetItem.BudgetItemImpl> summerOptions = new LinkedHashMap<>();
+
+        summerOptions.put("Melon Seeds", new GoldOnlyBudgetFormat(80));
+        summerOptions.put("Tomato Seeds", new GoldOnlyBudgetFormat(50));
+        summerOptions.put("Blueberry Seeds", new GoldOnlyBudgetFormat(80));
+
+        summerOptions.put("Pepper Seeds", new GoldOnlyBudgetFormat(40));
+        summerOptions.put("Wheat Seeds", new GoldOnlyBudgetFormat(10));
+        summerOptions.put("Radish Seeds", new GoldOnlyBudgetFormat(40));
+
+        summerOptions.put("Poppy Seeds", new GoldOnlyBudgetFormat(100));
+        summerOptions.put("Spangle Seeds", new GoldOnlyBudgetFormat(50));
+        summerOptions.put("Hops Starer", new GoldOnlyBudgetFormat(60));
+
+        summerOptions.put("Corn Seeds", new GoldOnlyBudgetFormat(150));
+        summerOptions.put("Sunflower Seeds", new GoldOnlyBudgetFormat(200));
+        summerOptions.put("Red Cabbage Seeds", new GoldOnlyBudgetFormat(100));
+
+        return summerOptions;
+    }
+
+    public static Map<String, BudgetItem.BudgetItemImpl> createFallStock() {
+        Map<String, BudgetItem.BudgetItemImpl> fallOptions = new LinkedHashMap<>();
+
+        fallOptions.put("Eggplant Seeds", new GoldOnlyBudgetFormat(20));
+        fallOptions.put("Corn", new GoldOnlyBudgetFormat(225));
+        fallOptions.put("Pumpkin Seeds", new GoldOnlyBudgetFormat(100));
+
+        fallOptions.put("Bokchoy Seeds", new GoldOnlyBudgetFormat(50));
+        fallOptions.put("Yam Seeds", new GoldOnlyBudgetFormat(60));
+        fallOptions.put("Cranberry Seeds", new GoldOnlyBudgetFormat(240));
+
+        fallOptions.put("Sunflower Seeds", new GoldOnlyBudgetFormat(100));
+        fallOptions.put("Fairy Seeds", new GoldOnlyBudgetFormat(50));
+        fallOptions.put("Amaranth Starer", new GoldOnlyBudgetFormat(60));
+
+        fallOptions.put("Grape Starter", new GoldOnlyBudgetFormat(150));
+        fallOptions.put("Wheat Seeds", new GoldOnlyBudgetFormat(10));
+        fallOptions.put("Artichoke Seeds", new GoldOnlyBudgetFormat(100));
+
+        return fallOptions;
+    }
 }
