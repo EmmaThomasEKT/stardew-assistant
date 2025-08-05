@@ -7,6 +7,7 @@
 //      no lowercase/catch options for inputs
 //      make inputs more consistent (rn return is either a number or R)
 //      make all navigational inputs integers, Shoppinglist.txt inputs strings/ints (parse)
+// why are some helpers public static void and some just public static, and what is private
 
 import java.io.*;
 import java.util.HashMap;

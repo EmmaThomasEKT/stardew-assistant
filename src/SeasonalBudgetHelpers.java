@@ -33,7 +33,7 @@ public class SeasonalBudgetHelpers {
     }
 
     public static Map.Entry<String, Integer> parseItemAndQuantity(String input) {
-        String[] parts = input.trim().split(" ");
+        String[] parts = input.trim().split("\\s+");
         if (parts.length < 2) {
             System.out.println("Please enter both item name and quantity (e.g. Cherry Sapling 20)");
             return null;
