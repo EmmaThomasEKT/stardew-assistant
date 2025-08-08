@@ -14,6 +14,7 @@ public class SeasonalBudgetHelpers {
     }
 
     public static void saveToShoppingList(String itemName, BudgetItem.BudgetItemImpl item, int quantity) {
+
         try (FileWriter fw = new FileWriter("ShoppingList.txt", true)) {
             fw.write(itemName + " x" + quantity + "g\n");
             fw.write(" Gold: " + (item.getGold() * quantity) + "g\n");
@@ -24,10 +25,7 @@ public class SeasonalBudgetHelpers {
                     fw.write("   - " + entry.getKey() + ": " + entry.getValue() + "\n");
                 }
             }
-            fw.write("\n");
-            fw.close();
-
-        } catch(IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

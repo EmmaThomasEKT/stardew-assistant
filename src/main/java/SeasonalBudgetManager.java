@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.util.*;
 
 public class SeasonalBudgetManager {
+
     public static boolean farmBuildings(Scanner scanner) { // boolean instead of void (automatically true)
 
         Map<String, BudgetItem.BudgetItemImpl> buildingOptions = SeasonalBudgetHelpers.createFarmBuildingOptions();
