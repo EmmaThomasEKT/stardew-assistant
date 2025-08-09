@@ -3,8 +3,6 @@
 // FUTURE CHANGES:
 
 //      no lowercase/catch options for inputs
-//      make inputs more consistent (rn return is either a number or R)
-//      make all navigational inputs integers, Shoppinglist.txt inputs strings/ints (parse)
 // control what happens when exceptions occur: use a logging framework
 
 import java.util.Scanner;
