@@ -1,9 +1,6 @@
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.AbstractMap;
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Helpers {
 
@@ -30,22 +27,14 @@ public class Helpers {
         }
     }
 
-    public static void saveToSeedList(String seedName, BudgetItem.BudgetItemImpl item, int quantity) {
-
+    public static void saveToSeedList(String seedName, int quantity) {
         try (FileWriter fw = new FileWriter("SeedList.txt", true)) {
-            fw.write(seedName + " x" + quantity + "g\n");
-            fw.write(" Gold: " + (item.getGold() * quantity) + "g\n");
-
-            if (!item.getMaterials().isEmpty()) {
-                fw.write(" Materials:\n");
-                for (Map.Entry<String, Integer> entry : item.getMaterials().entrySet()) {
-                    fw.write("   - " + entry.getKey() + ": " + entry.getValue() + "\n");
-                }
-            }
-        } catch(IOException e) {
+            fw.write(seedName + " " + quantity + "\n");
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 
     public static Map.Entry<String, Integer> parseItemAndQuantity(String input) {
         String[] parts = input.trim().split("\\s+");
@@ -275,7 +264,7 @@ public class Helpers {
 
         seedOptions.put("Sunflower Seeds", new GoldOnlyBudgetFormat(100));
         seedOptions.put("Fairy Seeds", new GoldOnlyBudgetFormat(50));
-        seedOptions.put("Amaranth Starer", new GoldOnlyBudgetFormat(60));
+        seedOptions.put("Amaranth Starter", new GoldOnlyBudgetFormat(60));
 
         seedOptions.put("Grape Starter", new GoldOnlyBudgetFormat(150));
         seedOptions.put("Wheat Seeds", new GoldOnlyBudgetFormat(10));

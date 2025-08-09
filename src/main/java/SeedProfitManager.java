@@ -12,6 +12,7 @@ public class SeedProfitManager {
                 4. Return
                 """);
         int tool = scanner.nextInt();
+        scanner.nextLine();
 
         switch (tool){
             case 1:
@@ -21,7 +22,7 @@ public class SeedProfitManager {
                 inputSeeds(scanner);
                 break;
             case 3:
-                // calculateProfit(scanner);
+                calculateProfit(scanner);
                 break;
             case 4:
                 return;
@@ -31,9 +32,6 @@ public class SeedProfitManager {
     }
 
     public static void editSeedList(Scanner scanner) {
-
-        scanner.nextLine();
-
         // read the file
         try (BufferedReader br = new BufferedReader(new FileReader("SeedList.txt"))) {
             String line = br.readLine();
@@ -71,11 +69,10 @@ public class SeedProfitManager {
 
     public static boolean inputSeeds(Scanner scanner) {
 
-        Map<String, BudgetItem.BudgetItemImpl> seedOptions = Helpers.createSeedStock();
-        scanner.nextLine();
+        Map<String, SeedInfo> seedData = SeedDatabase.seedData;
 
         System.out.println("Seeds:\n");
-        System.out.println(Helpers.createSeedStock());
+        System.out.println(SeedDatabase.seedData);
 
         while (true) {
 
@@ -97,12 +94,12 @@ public class SeedProfitManager {
             String seedName = result.getKey();
             int quantity = result.getValue();
 
-            if (seedOptions.containsKey(seedName)) {
-                BudgetItem.BudgetItemImpl selected = seedOptions.get(seedName);
+            if (seedData.containsKey(seedName)) {
+                SeedInfo selected = seedData.get(seedName);
                 System.out.println(seedName + " x" + quantity + " added to your list.");
 
                 // append to SeedList.txt
-                Helpers.saveToSeedList(seedName, selected, quantity);
+                Helpers.saveToSeedList(seedName, quantity);
             } else {
                 System.out.println("Invalid Input");
             }
@@ -110,9 +107,51 @@ public class SeedProfitManager {
         }
     }
 
-   /*     public static boolean calculateProfit(Scanner scanner) {
-            // read SeedList.txt
-            // do maths (seed price - seed sell price = seed profit
-            // output
-        }*/
+    public static boolean calculateProfit(Scanner scanner) {
+        int totalProfit = 0;
+
+
+        try (BufferedReader br = new BufferedReader(new FileReader("SeedList.txt"))) {
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                // Skip empty lines
+                line = line.trim();
+                if (line.isEmpty()) continue;
+
+                // Split line into seedName and quantity
+                String[] parts = line.split("\\s+");
+                if (parts.length < 2) {
+                    System.out.println("Invalid line format: " + line);
+                    continue;
+                }
+
+                String seedName = String.join(" ", Arrays.copyOf(parts, parts.length - 1));
+
+                int quantity;
+                try {
+                    quantity = Integer.parseInt(parts[parts.length -1]);
+                } catch (NumberFormatException e) {
+                    System.out.println("Invalid quantity for seed: " + seedName);
+                    continue;
+                }
+
+                // Look up seed info
+                SeedInfo info = SeedDatabase.seedData.get(seedName);
+
+                if (info != null) {
+                    int profitForThisSeed = info.profit * quantity;
+                    totalProfit += profitForThisSeed;
+                    System.out.printf("%s x%d = %d profit%n", seedName, quantity, profitForThisSeed);
+                } else {
+                    System.out.println("Unknown seed: " + seedName);
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Error reading file: " + e.getMessage());
+        }
+
+        System.out.println("Seasonal Profit Estimate: " + totalProfit);
+        return true;
+    }
 }
