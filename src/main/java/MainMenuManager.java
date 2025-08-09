@@ -139,35 +139,26 @@ public class MainMenuManager {
             e.printStackTrace(); // control what happens when exceptions occur: use a logging framework
         }
 
-        System.out.println("Please select an option from below (1/2/3):\n" +
+        System.out.println("Please select an option from below (1/2):\n" +
                 """
                     1. Clear List
-                    2. Calculate Total
-                    3. Return
+                    2. Return
                     """);
         int option = scanner.nextInt();
 
-        switch (option) {
-            case 1:
-                try {
-                    // print writer overwrites the file
-                    PrintWriter writer = new PrintWriter("ShoppingList.txt");
-                    // writing empty string to the file
-                    writer.print("");
-                    // close the writer to ensure all changes are written and resources are released
-                    writer.close();
-                    System.out.println("Your shopping list has been successfully cleared");
-                } catch (FileNotFoundException e) {
-                    System.err.println("Error: File not found");
-                }
-                break;
-            case 2:
-                calculateTotal(scanner);
-                break;
-            case 3:
-                return;
-            default:
-                System.out.println("Invalid Choice.");
+        if (option == 1) {
+            try {
+                PrintWriter writer = new PrintWriter("ShoppingList.txt"); // print writer overwrites the files
+                writer.print(""); // writing empty string to the file
+                writer.close(); // close the writer to ensure all changes are written and resources are released
+                System.out.println("Your shopping list has been successfully cleared");
+            } catch (FileNotFoundException e) {
+                System.err.println("Error: File not found");
+            }
+        } else if (option == 2) {
+            return;
+        } else {
+            System.out.println("Invalid Choice.");
         }
     }
 
