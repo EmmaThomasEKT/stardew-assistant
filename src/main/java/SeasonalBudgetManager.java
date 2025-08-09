@@ -14,7 +14,7 @@ public class SeasonalBudgetManager {
         while (true) {
 
             System.out.println("\nEnter building name to add to your list, or R to return to the Carpenter's Shop:");
-            String buildingInput = scanner.nextLine();
+            String buildingInput = scanner.nextLine().trim();
 
             if (buildingInput.equalsIgnoreCase("R")) {
                 return false;
@@ -39,7 +39,7 @@ public class SeasonalBudgetManager {
         while (true) {
 
             System.out.println("\nEnter the upgrade name to add to your list, or R to return to the Carpenter's Shop:");
-            String upgradeInput = scanner.nextLine();
+            String upgradeInput = scanner.nextLine().trim();
 
             if (upgradeInput.equalsIgnoreCase("R")) {
                 return false;
@@ -64,7 +64,7 @@ public class SeasonalBudgetManager {
         while (true) {
 
             System.out.println("\nEnter the renovation name to add to your list, or R to return to the Carpenter's Shop:");
-            String renoInput = scanner.nextLine();
+            String renoInput = scanner.nextLine().trim();
 
             if (renoInput.equalsIgnoreCase("R")) {
                 return false;
@@ -89,7 +89,7 @@ public class SeasonalBudgetManager {
         while (true) {
 
             System.out.println("\nEnter the livestock name to add to your list, or R to return:");
-            String livestockInput = scanner.nextLine();
+            String livestockInput = scanner.nextLine().trim();
 
             if (livestockInput.equalsIgnoreCase("R")) {
                 return false;
@@ -114,7 +114,7 @@ public class SeasonalBudgetManager {
         while (true) {
 
             System.out.println("\nEnter the pet name to add to your list, or R to return to Marnie's Ranch:");
-            String petInput = scanner.nextLine();
+            String petInput = scanner.nextLine().trim();
 
             if (petInput.equalsIgnoreCase("R")) {
                 return false;
@@ -217,7 +217,7 @@ public class SeasonalBudgetManager {
         while (true) {
 
             System.out.println("Select a seed followed by the quantity, or R to return.");
-            String summerInput = scanner.nextLine();
+            String summerInput = scanner.nextLine().trim();
 
             if (summerInput.isEmpty()) {
                 System.out.println("Input cannot be empty.");
@@ -256,7 +256,7 @@ public class SeasonalBudgetManager {
         while (true) {
 
             System.out.println("Select a seed followed by the quantity, or R to return.");
-            String fallInput = scanner.nextLine();
+            String fallInput = scanner.nextLine().trim();
 
             if (fallInput.isEmpty()) {
                 System.out.println("Input cannot be empty.");

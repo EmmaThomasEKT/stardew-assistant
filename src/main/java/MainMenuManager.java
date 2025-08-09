@@ -54,7 +54,7 @@ public class MainMenuManager {
                     shoppingList(scanner);
                     break;
                 case 5:
-                    calculateTotal();
+                    calculateTotal(scanner);
                     break;
                 case 6:
                     return false;
@@ -140,7 +140,7 @@ public class MainMenuManager {
                 """
                     1. Clear List
                     2. Calculate Total
-                    3. Return to Seasonal Budget Menu
+                    3. Return
                     """);
         int option = scanner.nextInt();
 
@@ -159,7 +159,7 @@ public class MainMenuManager {
                 }
                 break;
             case 2:
-                calculateTotal();
+                calculateTotal(scanner);
                 break;
             case 3:
                 return;
@@ -201,7 +201,7 @@ public class MainMenuManager {
         }
     }
 
-    public static void calculateTotal() {
+    public static boolean calculateTotal(Scanner scanner) {
         // read through ShoppingList.txt
         System.out.println("--- Calculate Total ---");
 
@@ -240,6 +240,21 @@ public class MainMenuManager {
         System.out.println("Total Materials:");
         for (Map.Entry<String, Integer> entry : materialTotals.entrySet()) {
             System.out.println(" - " + entry.getKey() + ": " + entry.getValue());
+        }
+
+        scanner.nextLine();
+
+        while (true) {
+            System.out.println("Thank you for using Stardew Assistant. Would you like to continue (y/n)?: ");
+            String input = scanner.nextLine().trim();
+
+            if (input.equalsIgnoreCase("y")) {
+                return false;
+            } else if (input.equalsIgnoreCase("n")) {
+                System.exit(0);
+            } else {
+                System.out.println("Invalid Choice.");
+            }
         }
     }
 }
