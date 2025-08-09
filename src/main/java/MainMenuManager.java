@@ -10,7 +10,8 @@ public class MainMenuManager {
             System.out.println("Welcome to Stardew Assistant!\n");
             System.out.println("""
                             1. Seasonal Budget Planner
-                            2. Quit
+                            2. Seed Profit Calculator
+                            3. Quit
                             """);
             System.out.println("Please select a tool (1/2): ");
             int tool = scanner.nextInt();
@@ -18,6 +19,8 @@ public class MainMenuManager {
             if (tool == 1) {
                 seasonalBudgetTool(scanner);
             } else if (tool == 2) {
+                SeedProfitManager.seedProfitCalculator(scanner);
+            } else if (tool == 3) {
                 System.out.println("Thanks for using Stardew Assistant!");
                 System.exit(0);
             } else {
@@ -245,7 +248,7 @@ public class MainMenuManager {
         scanner.nextLine();
 
         while (true) {
-            System.out.println("Thank you for using Stardew Assistant. Would you like to continue (y/n)?: ");
+            System.out.println("\nThank you for using Stardew Assistant. Would you like to continue (y/n)?:\n");
             String input = scanner.nextLine().trim();
 
             if (input.equalsIgnoreCase("y")) {
