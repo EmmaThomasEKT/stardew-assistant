@@ -1,15 +1,13 @@
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.*;
 
 public class SeasonalBudgetManager {
 
     public static boolean farmBuildings(Scanner scanner) { // boolean instead of void (automatically true)
 
-        Map<String, BudgetItem.BudgetItemImpl> buildingOptions = SeasonalBudgetHelpers.createFarmBuildingOptions();
+        Map<String, BudgetItem.BudgetItemImpl> buildingOptions = Helpers.createFarmBuildingOptions();
 
         System.out.println("Here are the available farm buildings:\n");
-        SeasonalBudgetHelpers.printOptions(buildingOptions);
+        Helpers.printOptions(buildingOptions);
 
         while (true) {
 
@@ -22,7 +20,7 @@ public class SeasonalBudgetManager {
                 BudgetItem.BudgetItemImpl selected = buildingOptions.get(buildingInput);
                 // add selected to user's list
                 System.out.println(buildingInput + " added to your list.");
-                SeasonalBudgetHelpers.saveToShoppingList(buildingInput, selected, 1);
+                Helpers.saveToShoppingList(buildingInput, selected, 1);
             } else {
                 System.out.println("Invalid selection.");
             }
@@ -31,10 +29,10 @@ public class SeasonalBudgetManager {
 
     public static boolean houseUpgrades(Scanner scanner) {
 
-        Map<String, BudgetItem.BudgetItemImpl> houseOptions = SeasonalBudgetHelpers.createHouseUpgradeOptions();
+        Map<String, BudgetItem.BudgetItemImpl> houseOptions = Helpers.createHouseUpgradeOptions();
 
         System.out.println("Here are the available house upgrades:\n");
-        SeasonalBudgetHelpers.printOptions(houseOptions);
+        Helpers.printOptions(houseOptions);
 
         while (true) {
 
@@ -47,7 +45,7 @@ public class SeasonalBudgetManager {
                 BudgetItem.BudgetItemImpl selected = houseOptions.get(upgradeInput);
                 // add selected to user's list
                 System.out.println(upgradeInput + " added to your list.");
-                SeasonalBudgetHelpers.saveToShoppingList(upgradeInput, selected, 1);
+                Helpers.saveToShoppingList(upgradeInput, selected, 1);
             } else {
                 System.out.println("Invalid selection.");
             }
@@ -56,10 +54,10 @@ public class SeasonalBudgetManager {
 
     public static boolean houseRenovations(Scanner scanner) {
 
-        Map<String, BudgetItem.BudgetItemImpl> houseRenoOptions = SeasonalBudgetHelpers.createHouseRenoOptions();
+        Map<String, BudgetItem.BudgetItemImpl> houseRenoOptions = Helpers.createHouseRenoOptions();
 
         System.out.println("Here are the available house renovations:\n");
-        SeasonalBudgetHelpers.printOptions(houseRenoOptions);
+        Helpers.printOptions(houseRenoOptions);
 
         while (true) {
 
@@ -72,7 +70,7 @@ public class SeasonalBudgetManager {
                 BudgetItem.BudgetItemImpl selected = houseRenoOptions.get(renoInput);
                 // add selected to user's list
                 System.out.println(renoInput + " added to your list.");
-                SeasonalBudgetHelpers.saveToShoppingList(renoInput, selected, 1);
+                Helpers.saveToShoppingList(renoInput, selected, 1);
             } else {
                 System.out.println("Invalid selection.");
             }
@@ -81,10 +79,10 @@ public class SeasonalBudgetManager {
     }
 
     public static boolean livestock(Scanner scanner) {
-        Map<String, BudgetItem.BudgetItemImpl> livestockOptions = SeasonalBudgetHelpers.createLivestockOptions();
+        Map<String, BudgetItem.BudgetItemImpl> livestockOptions = Helpers.createLivestockOptions();
 
         System.out.println("Here are the available livestock:\n");
-        SeasonalBudgetHelpers.printOptions(livestockOptions);
+        Helpers.printOptions(livestockOptions);
 
         while (true) {
 
@@ -97,7 +95,7 @@ public class SeasonalBudgetManager {
                 BudgetItem.BudgetItemImpl selected = livestockOptions.get(livestockInput);
                 // add selected to user's list
                 System.out.println(livestockInput + " added to your list.");
-                SeasonalBudgetHelpers.saveToShoppingList(livestockInput, selected, 1);
+                Helpers.saveToShoppingList(livestockInput, selected, 1);
             } else {
                 System.out.println("Invalid selection.");
             }
@@ -106,10 +104,10 @@ public class SeasonalBudgetManager {
 
     public static boolean petAdoption(Scanner scanner) {
 
-        Map<String, BudgetItem.BudgetItemImpl> petAdoptionOptions = SeasonalBudgetHelpers.createPetAdoptionOptions();
+        Map<String, BudgetItem.BudgetItemImpl> petAdoptionOptions = Helpers.createPetAdoptionOptions();
 
         System.out.println("Here are the available pets:\n");
-        SeasonalBudgetHelpers.printOptions(petAdoptionOptions);
+        Helpers.printOptions(petAdoptionOptions);
 
         while (true) {
 
@@ -122,7 +120,7 @@ public class SeasonalBudgetManager {
                 BudgetItem.BudgetItemImpl selected = petAdoptionOptions.get(petInput);
 
                 System.out.println(petInput + " added to your list.");
-                SeasonalBudgetHelpers.saveToShoppingList(petInput, selected, 1);
+                Helpers.saveToShoppingList(petInput, selected, 1);
             } else {
                 System.out.println("Invalid selection.");
             }
@@ -131,10 +129,10 @@ public class SeasonalBudgetManager {
 
     public static boolean yearRoundStock(Scanner scanner) {
 
-        Map<String, BudgetItem.BudgetItemImpl> yearRoundOptions = SeasonalBudgetHelpers.createYearRoundStockOptions();
+        Map<String, BudgetItem.BudgetItemImpl> yearRoundOptions = Helpers.createYearRoundStockOptions();
 
         System.out.println("Here are the available items:\n");
-        SeasonalBudgetHelpers.printOptions(yearRoundOptions);
+        Helpers.printOptions(yearRoundOptions);
 
         while (true) {
 
@@ -150,7 +148,7 @@ public class SeasonalBudgetManager {
                 return false;
             }
 
-            Map.Entry<String, Integer> result = SeasonalBudgetHelpers.parseItemAndQuantity(yearInput);
+            Map.Entry<String, Integer> result = Helpers.parseItemAndQuantity(yearInput);
             if (result == null) continue; // error already printed
 
             String itemName = result.getKey();
@@ -160,7 +158,7 @@ public class SeasonalBudgetManager {
                 BudgetItem.BudgetItemImpl selected = yearRoundOptions.get(itemName);
 
                 System.out.println(itemName + " x" + quantity + " added to your list.");
-                SeasonalBudgetHelpers.saveToShoppingList(itemName, selected, quantity);
+                Helpers.saveToShoppingList(itemName, selected, quantity);
 
             } else {
                 System.out.println("Invalid Input");
@@ -170,10 +168,10 @@ public class SeasonalBudgetManager {
 
     public static boolean springStock(Scanner scanner) {
 
-        Map<String, BudgetItem.BudgetItemImpl> springOptions = SeasonalBudgetHelpers.createSpringStock();
+        Map<String, BudgetItem.BudgetItemImpl> springOptions = Helpers.createSpringStock();
 
         System.out.println("Here are the available seeds:\n");
-        SeasonalBudgetHelpers.printOptions(springOptions);
+        Helpers.printOptions(springOptions);
 
         while (true) {
 
@@ -189,7 +187,7 @@ public class SeasonalBudgetManager {
                 return false;
             }
 
-            Map.Entry<String, Integer> result = SeasonalBudgetHelpers.parseItemAndQuantity(springInput);
+            Map.Entry<String, Integer> result = Helpers.parseItemAndQuantity(springInput);
             if (result == null) continue;
 
             String itemName = result.getKey();
@@ -199,7 +197,7 @@ public class SeasonalBudgetManager {
                 BudgetItem.BudgetItemImpl selected = springOptions.get(itemName);
 
                 System.out.println(itemName + " x" + quantity + " added to your list.");
-                SeasonalBudgetHelpers.saveToShoppingList(itemName, selected, quantity);
+                Helpers.saveToShoppingList(itemName, selected, quantity);
 
             } else {
                 System.out.println("Invalid Input");
@@ -209,10 +207,10 @@ public class SeasonalBudgetManager {
 
     public static boolean summerStock(Scanner scanner) {
 
-        Map<String, BudgetItem.BudgetItemImpl> summerOptions = SeasonalBudgetHelpers.createSummerStock();
+        Map<String, BudgetItem.BudgetItemImpl> summerOptions = Helpers.createSummerStock();
 
         System.out.println("Here are the available seeds:\n");
-        SeasonalBudgetHelpers.printOptions(summerOptions);
+        Helpers.printOptions(summerOptions);
 
         while (true) {
 
@@ -228,7 +226,7 @@ public class SeasonalBudgetManager {
                 return false;
             }
 
-            Map.Entry<String, Integer> result = SeasonalBudgetHelpers.parseItemAndQuantity(summerInput);
+            Map.Entry<String, Integer> result = Helpers.parseItemAndQuantity(summerInput);
             if (result == null) continue;
 
             String itemName = result.getKey();
@@ -238,7 +236,7 @@ public class SeasonalBudgetManager {
                 BudgetItem.BudgetItemImpl selected = summerOptions.get(itemName);
 
                 System.out.println(itemName + " x" + quantity + " added to your list.");
-                SeasonalBudgetHelpers.saveToShoppingList(itemName, selected, quantity);
+                Helpers.saveToShoppingList(itemName, selected, quantity);
 
             } else {
                 System.out.println("Invalid Input");
@@ -248,10 +246,10 @@ public class SeasonalBudgetManager {
 
     public static boolean fallStock(Scanner scanner) {
 
-        Map<String, BudgetItem.BudgetItemImpl> fallOptions = SeasonalBudgetHelpers.createFallStock();
+        Map<String, BudgetItem.BudgetItemImpl> fallOptions = Helpers.createFallStock();
 
         System.out.println("Here are the available seeds:\n");
-        SeasonalBudgetHelpers.printOptions(fallOptions);
+        Helpers.printOptions(fallOptions);
 
         while (true) {
 
@@ -267,7 +265,7 @@ public class SeasonalBudgetManager {
                 return false;
             }
 
-            Map.Entry<String, Integer> result = SeasonalBudgetHelpers.parseItemAndQuantity(fallInput);
+            Map.Entry<String, Integer> result = Helpers.parseItemAndQuantity(fallInput);
             if (result == null) continue;
 
             String itemName = result.getKey();
@@ -277,7 +275,7 @@ public class SeasonalBudgetManager {
                 BudgetItem.BudgetItemImpl selected = fallOptions.get(itemName);
 
                 System.out.println(itemName + " x" + quantity + " added to your list.");
-                SeasonalBudgetHelpers.saveToShoppingList(itemName, selected, quantity);
+                Helpers.saveToShoppingList(itemName, selected, quantity);
 
             } else {
                 System.out.println("Invalid Input");

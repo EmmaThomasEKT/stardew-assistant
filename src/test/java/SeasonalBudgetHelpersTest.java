@@ -6,7 +6,7 @@ class SeasonalBudgetManagerTest {
 
     @Test
     public void testParseItemAndQuantity_validInput() {
-        Map.Entry<String, Integer> result = SeasonalBudgetHelpers.parseItemAndQuantity("Cherry Sapling 20");
+        Map.Entry<String, Integer> result = Helpers.parseItemAndQuantity("Cherry Sapling 20");
         assertNotNull(result);
         assertEquals("Cherry Sapling", result.getKey());
         assertEquals(20, result.getValue());
@@ -14,25 +14,25 @@ class SeasonalBudgetManagerTest {
 
     @Test
     public void testParseItemAndQuantity_missingQuantity() {
-        Map.Entry<String, Integer> result = SeasonalBudgetHelpers.parseItemAndQuantity("Cherry Sapling");
+        Map.Entry<String, Integer> result = Helpers.parseItemAndQuantity("Cherry Sapling");
         assertNull(result);
     }
 
     @Test
     public void testParseItemAndQuantity_negativeQuantity() {
-        Map.Entry<String, Integer> result = SeasonalBudgetHelpers.parseItemAndQuantity("Cherry Sapling -5");
+        Map.Entry<String, Integer> result = Helpers.parseItemAndQuantity("Cherry Sapling -5");
         assertNull(result);
     }
 
     @Test
     public void testParseItemAndQuantity_nonNumericQuantity() {
-        Map.Entry<String, Integer> result = SeasonalBudgetHelpers.parseItemAndQuantity("Cherry Sapling abc");
+        Map.Entry<String, Integer> result = Helpers.parseItemAndQuantity("Cherry Sapling abc");
         assertNull(result);
     }
 
     @Test
     public void testParseItemAndQuantity_extrasSpaces() {
-        Map.Entry<String, Integer> result = SeasonalBudgetHelpers.parseItemAndQuantity("   Cherry       Sapling     10");
+        Map.Entry<String, Integer> result = Helpers.parseItemAndQuantity("   Cherry       Sapling     10");
 
         assertNotNull(result);
         assertEquals("Cherry Sapling", result.getKey());

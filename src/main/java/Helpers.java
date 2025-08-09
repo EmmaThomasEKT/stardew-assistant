@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class SeasonalBudgetHelpers {
+public class Helpers {
 
     public static void printOptions(Map<String, BudgetItem.BudgetItemImpl> options) {
         for (Map.Entry<String, BudgetItem.BudgetItemImpl> entry : options.entrySet()) {
@@ -26,6 +26,23 @@ public class SeasonalBudgetHelpers {
                 }
             }
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void saveToSeedList(String seedName, BudgetItem.BudgetItemImpl item, int quantity) {
+
+        try (FileWriter fw = new FileWriter("SeedList.txt", true)) {
+            fw.write(seedName + " x" + quantity + "g\n");
+            fw.write(" Gold: " + (item.getGold() * quantity) + "g\n");
+
+            if (!item.getMaterials().isEmpty()) {
+                fw.write(" Materials:\n");
+                for (Map.Entry<String, Integer> entry : item.getMaterials().entrySet()) {
+                    fw.write("   - " + entry.getKey() + ": " + entry.getValue() + "\n");
+                }
+            }
+        } catch(IOException e) {
             e.printStackTrace();
         }
     }
@@ -215,5 +232,55 @@ public class SeasonalBudgetHelpers {
         fallOptions.put("Artichoke Seeds", new GoldOnlyBudgetFormat(100));
 
         return fallOptions;
+    }
+
+    public static Map<String, BudgetItem.BudgetItemImpl> createSeedStock() {
+        Map<String, BudgetItem.BudgetItemImpl> seedOptions = new LinkedHashMap<>();
+
+        seedOptions.put("Parsnip Seeds", new GoldOnlyBudgetFormat(20));
+        seedOptions.put("Bean Starter", new GoldOnlyBudgetFormat(60));
+        seedOptions.put("Cauliflower Seeds", new GoldOnlyBudgetFormat(80));
+
+        seedOptions.put("Potato Seeds", new GoldOnlyBudgetFormat(50));
+        seedOptions.put("Tulip Bulb", new GoldOnlyBudgetFormat(20));
+        seedOptions.put("Kale Seeds", new GoldOnlyBudgetFormat(70));
+
+        seedOptions.put("Jazz Seeds", new GoldOnlyBudgetFormat(30));
+        seedOptions.put("Garlic Seeds", new GoldOnlyBudgetFormat(40));
+        seedOptions.put("Rice Shoot", new GoldOnlyBudgetFormat(40));
+
+        seedOptions.put("Melon Seeds", new GoldOnlyBudgetFormat(80));
+        seedOptions.put("Tomato Seeds", new GoldOnlyBudgetFormat(50));
+        seedOptions.put("Blueberry Seeds", new GoldOnlyBudgetFormat(80));
+
+        seedOptions.put("Pepper Seeds", new GoldOnlyBudgetFormat(40));
+        seedOptions.put("Wheat Seeds", new GoldOnlyBudgetFormat(10));
+        seedOptions.put("Radish Seeds", new GoldOnlyBudgetFormat(40));
+
+        seedOptions.put("Poppy Seeds", new GoldOnlyBudgetFormat(100));
+        seedOptions.put("Spangle Seeds", new GoldOnlyBudgetFormat(50));
+        seedOptions.put("Hops Starer", new GoldOnlyBudgetFormat(60));
+
+        seedOptions.put("Corn Seeds", new GoldOnlyBudgetFormat(150));
+        seedOptions.put("Sunflower Seeds", new GoldOnlyBudgetFormat(200));
+        seedOptions.put("Red Cabbage Seeds", new GoldOnlyBudgetFormat(100));
+
+        seedOptions.put("Eggplant Seeds", new GoldOnlyBudgetFormat(20));
+        seedOptions.put("Corn", new GoldOnlyBudgetFormat(225));
+        seedOptions.put("Pumpkin Seeds", new GoldOnlyBudgetFormat(100));
+
+        seedOptions.put("Bokchoy Seeds", new GoldOnlyBudgetFormat(50));
+        seedOptions.put("Yam Seeds", new GoldOnlyBudgetFormat(60));
+        seedOptions.put("Cranberry Seeds", new GoldOnlyBudgetFormat(240));
+
+        seedOptions.put("Sunflower Seeds", new GoldOnlyBudgetFormat(100));
+        seedOptions.put("Fairy Seeds", new GoldOnlyBudgetFormat(50));
+        seedOptions.put("Amaranth Starer", new GoldOnlyBudgetFormat(60));
+
+        seedOptions.put("Grape Starter", new GoldOnlyBudgetFormat(150));
+        seedOptions.put("Wheat Seeds", new GoldOnlyBudgetFormat(10));
+        seedOptions.put("Artichoke Seeds", new GoldOnlyBudgetFormat(100));
+
+        return seedOptions;
     }
 }
