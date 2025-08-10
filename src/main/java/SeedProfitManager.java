@@ -72,7 +72,7 @@ public class SeedProfitManager {
         Map<String, SeedInfo> seedData = SeedDatabase.seedData;
 
         System.out.println("Seeds:\n");
-        System.out.println(SeedDatabase.seedData);
+        Helpers.printOptions(Helpers.createSeedStock());
 
         while (true) {
 
