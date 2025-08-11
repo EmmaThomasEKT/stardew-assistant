@@ -6,6 +6,10 @@ import java.util.Scanner;
 public class MainMenuManager {
 
     public static boolean mainMenu(Scanner scanner) {
+
+        SeedRepo repository = new SeedRepo("SeedList.txt");
+        SeedProfitManager seedProfitManager = new SeedProfitManager(repository, SeedDatabase.seedData);
+
         while (true) {
             System.out.println("Welcome to Stardew Assistant!\n");
             System.out.println("""
@@ -13,13 +17,15 @@ public class MainMenuManager {
                             2. Seed Profit Calculator
                             3. Quit
                             """);
-            System.out.println("Please select a tool (1/2): ");
+            System.out.println("Please select a tool (1/2/3): ");
+
             int tool = scanner.nextInt();
+            scanner.nextLine(); // clear newline
 
             if (tool == 1) {
                 seasonalBudgetTool(scanner);
             } else if (tool == 2) {
-                SeedProfitManager.seedProfitCalculator(scanner);
+                seedProfitManager.runMenu(scanner);
             } else if (tool == 3) {
                 System.out.println("Thanks for using Stardew Assistant!");
                 System.exit(0);

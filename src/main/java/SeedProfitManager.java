@@ -3,7 +3,17 @@ import java.util.*;
 
 // dont need a helper since each method is usinf
 public class SeedProfitManager {
-    public static void seedProfitCalculator(Scanner scanner) {
+
+    private final SeedRepo repository;
+    private final Map<String, SeedInfo> seedData;
+
+    public SeedProfitManager(SeedRepo repository, Map<String, SeedInfo> seedData) {
+        this.repository = repository;
+        this.seedData = seedData;
+    }
+
+    // UI
+    public void runMenu(Scanner scanner) {
         System.out.println("Welcome to Seed Profit Calculator\nPlease select a tool below (1/2/3):\n");
         System.out.println("""
                 1. View/Clear Seed List
@@ -22,7 +32,7 @@ public class SeedProfitManager {
                 inputSeeds(scanner);
                 break;
             case 3:
-                calculateProfit(scanner);
+                calculateProfitUI();
                 break;
             case 4:
                 return;
@@ -31,61 +41,35 @@ public class SeedProfitManager {
         }
     }
 
-    public static void editSeedList(Scanner scanner) {
-        // read the file
-        try (BufferedReader br = new BufferedReader(new FileReader("SeedList.txt"))) {
-            String line = br.readLine();
-
-            if (line != null) {
-                System.out.println("---Seed List---");
-                do {
-                    System.out.println(line);
-                    line = br.readLine();
-                } while (line != null);
-            } else {
-                System.out.println("Your seed list is empty!");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+    // UI Helpers
+    public void editSeedList(Scanner scanner) {
+        List<String> seeds = repository.loadSeedList();
+        if (seeds.isEmpty()) {
+            System.out.println("Your seed list is empty!");
+        } else {
+            System.out.println("--- Seed List ---");
+            seeds.forEach(System.out::println);
         }
 
         System.out.println("Press C to clear or R to return.");
         String input = scanner.nextLine().trim();
-
         if (input.equalsIgnoreCase("C")) {
-            try (PrintWriter writer = new PrintWriter("SeedList.txt")) {
-                writer.print("");
-                writer.close();
-                System.out.println("Your seed list has been successfuly cleared.");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else if (input.equalsIgnoreCase("R")) {
-            return;
-        } else {
-            System.out.println("Invalid Input.");
+            repository.clearSeedList();
+            System.out.println("Your seed list has been successfully cleared.");
         }
     }
 
-    public static boolean inputSeeds(Scanner scanner) {
-
-        Map<String, SeedInfo> seedData = SeedDatabase.seedData;
-
-        System.out.println("Seeds:\n");
+    public void inputSeeds(Scanner scanner) {
         Helpers.printOptions(Helpers.createSeedStock());
 
         while (true) {
-
             System.out.println("Enter a seed followed by the quantity, or R to return.\n");
             String seedInput = scanner.nextLine().trim();
 
+            if (seedInput.equalsIgnoreCase("R")) break;
             if (seedInput.isEmpty()) {
                 System.out.println("Input cannot be empty");
                 continue;
-            }
-
-            if (seedInput.equalsIgnoreCase("R")) {
-                return false;
             }
 
             Map.Entry<String, Integer> result = Helpers.parseItemAndQuantity(seedInput);
@@ -95,11 +79,8 @@ public class SeedProfitManager {
             int quantity = result.getValue();
 
             if (seedData.containsKey(seedName)) {
-                SeedInfo selected = seedData.get(seedName);
+                repository.addSeed(seedName, quantity);
                 System.out.println(seedName + " x" + quantity + " added to your list.");
-
-                // append to SeedList.txt
-                Helpers.saveToSeedList(seedName, quantity);
             } else {
                 System.out.println("Invalid Input");
             }
@@ -107,51 +88,21 @@ public class SeedProfitManager {
         }
     }
 
-    public static boolean calculateProfit(Scanner scanner) {
+    public void calculateProfitUI() {
+        Map<String, Integer> seeds = repository.getSeedQuantities();
+        int profit = calculateProfit(seeds);
+        System.out.println("Seasonal Profit Estimate: " + profit);
+    }
+
+    // core logic
+    public int calculateProfit(Map<String, Integer> seedQuantities) {
         int totalProfit = 0;
-
-
-        try (BufferedReader br = new BufferedReader(new FileReader("SeedList.txt"))) {
-            String line;
-
-            while ((line = br.readLine()) != null) {
-                // Skip empty lines
-                line = line.trim();
-                if (line.isEmpty()) continue;
-
-                // Split line into seedName and quantity
-                String[] parts = line.split("\\s+");
-                if (parts.length < 2) {
-                    System.out.println("Invalid line format: " + line);
-                    continue;
-                }
-
-                String seedName = String.join(" ", Arrays.copyOf(parts, parts.length - 1));
-
-                int quantity;
-                try {
-                    quantity = Integer.parseInt(parts[parts.length -1]);
-                } catch (NumberFormatException e) {
-                    System.out.println("Invalid quantity for seed: " + seedName);
-                    continue;
-                }
-
-                // Look up seed info
-                SeedInfo info = SeedDatabase.seedData.get(seedName);
-
-                if (info != null) {
-                    int profitForThisSeed = info.profit * quantity;
-                    totalProfit += profitForThisSeed;
-                    System.out.printf("%s x%d = %d profit%n", seedName, quantity, profitForThisSeed);
-                } else {
-                    System.out.println("Unknown seed: " + seedName);
-                }
+        for (var entry : seedQuantities.entrySet()) {
+            SeedInfo info = seedData.get(entry.getKey());
+            if (info != null) {
+                totalProfit += info.profit + entry.getValue();
             }
-        } catch (IOException e) {
-            System.err.println("Error reading file: " + e.getMessage());
         }
-
-        System.out.println("Seasonal Profit Estimate: " + totalProfit);
-        return true;
+        return totalProfit;
     }
 }
